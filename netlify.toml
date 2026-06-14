@@ -1,0 +1,11 @@
+# Netlify Content Performance Dashboard (external-facing customer view).
+# This repo deploys as-is from the root — no base directory needed.
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/lineage-analytics"
+  to = "/.netlify/functions/lineage-analytics"
+  status = 200
