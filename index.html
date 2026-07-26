@@ -354,8 +354,20 @@ const LI_SNAPSHOT = {
     }
   },
   overall: {
-    membersReached: null,  // send the overall "Members reached" to fill this
-    engagement: null       // send the overall engagement breakdown to fill this
+    membersReached: 37037,
+    engagement: {
+      social: { total: 2910, items: [
+        { label:'Reactions',          value:2638 },
+        { label:'Comments',           value:213  },
+        { label:'Reposts',            value:24   },
+        { label:'Saves',              value:28   },
+        { label:'Sends on LinkedIn',  value:7    }
+      ]},
+      link: { total: 88, items: [
+        { label:'Premium custom button engagements', value:44 },
+        { label:'Visits to links in all posts',      value:44 }
+      ]}
+    }
   }
 };
 
