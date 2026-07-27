@@ -313,8 +313,8 @@ const ICP_REPORT = {
   ],
   contentInsights: [
     'Agent Experience (AX) posts consistently attract the highest ICP rates (83–93%) — the single strongest ICP magnet. Five of the top 10 posts by ICP rate are AX topics.',
-    'Top ICP post: “Agent Experience / Netlify.ai” (May 5) — 93% ICP rate, 14 ICP of 15 total.',
-    'Highest-volume ICP post: “Pricing / Unlimited seats” (Apr 14) — 85% ICP rate, 179 ICP of 210 total.',
+    'Top ICP post (published May 5, 2026): “Agent Experience / Netlify.ai” — 93% ICP rate, 14 ICP of 15 total.',
+    'Highest-volume ICP post (published Apr 14, 2026): “Pricing / Unlimited seats” — 85% ICP rate, 179 ICP of 210 total.',
     'Original posts average 85.7 reactions vs 14.5 for reposts (5.9x per post); the 58 original posts produce 95% of all reactions.',
     'Developer / Software Engineer is the largest ICP segment at 43% (654 of 1,511).',
     'Influencers & technical leaders make up 34% (505), reflecting AX and build-vs-buy thought leadership.',
@@ -355,6 +355,7 @@ const LI_SNAPSHOT = {
   },
   overall: {
     membersReached: 37041,
+    membersReachedNote: 'Jun 14 – Jul 26',
     engagement: {
       social: { total: 2910, items: [
         { label:'Reactions',          value:2638 },
@@ -371,21 +372,23 @@ const LI_SNAPSHOT = {
   }
 };
 
-// ── LINKEDIN LIVE FEED (manual, from LinkedIn Aggregate Analytics export) ──
-// Baked into the repo so updates are GitHub → Netlify only (no external data
-// store). To refresh: export LinkedIn analytics for the new range and replace
-// the arrays/posts/demographics below. Daily arrays are date-aligned from
-// `start` to `end`. Members reached + the engagement-type breakdown live in
-// LI_SNAPSHOT (LinkedIn reports those separately from the daily feed).
+// ── LINKEDIN LIVE FEED (manual, from LinkedIn Aggregate Analytics exports) ──
+// Baked into the repo so updates are GitHub -> Netlify only (no external data
+// store). Covers the full engagement period Apr 14 - Jul 26, 2026, stitched
+// from the Apr-Jun and Jun-Jul exports. Daily arrays are date-aligned from
+// `start` to `end`. To refresh, replace with a single export covering the
+// whole range. NOTE: Members reached (unique) and the engagement-type split
+// live in LI_SNAPSHOT and currently reflect the Jun 14 - Jul 26 window only,
+// since unique reach can't be summed across two exports.
 const LI_DATA = {
-  src: "LinkedIn export (Aggregate Analytics)",
+  src: "LinkedIn export (Aggregate Analytics), Apr 14 \u2013 Jul 26",
   urlPrefix: "https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_",
-  start: "2026-06-14", end: "2026-07-26",
+  start: "2026-04-14", end: "2026-07-26",
   totFollowers: 6984,
   discovery: { members: 37041 },
-  impr: [829,930,2586,4208,4438,3181,2465,1321,1552,867,1095,1708,2332,843,462,2895,3652,2688,3011,5572,4344,2644,2735,6122,2361,3531,3964,1915,1200,9207,6054,3062,3102,2808,1843,1405,2288,1877,2235,2023,2039,871,39],
-  eng: [14,10,75,64,79,47,33,12,25,15,26,56,64,24,6,101,112,73,83,146,70,41,51,197,59,92,88,43,30,412,228,92,84,83,28,31,55,55,63,48,67,16,-1],
-  fNew: [2,8,10,12,5,12,6,1,4,5,10,11,10,6,2,25,16,42,17,18,12,5,16,14,5,10,10,8,2,48,27,18,18,10,3,5,20,17,12,11,14,1,0],
+  impr: [2919,2810,2220,1754,873,792,5504,5982,5042,5253,3526,1676,1548,2819,3012,3311,2294,1198,653,713,3567,5203,1936,1373,1203,689,588,754,1109,845,1775,9828,8147,2634,3119,11995,11359,3898,4880,3513,2163,2060,3341,8230,6010,6051,2933,2015,2623,2648,2839,2400,5952,2791,1525,1756,1728,3969,3338,3410,1282,829,930,2586,4208,4438,3181,2465,1321,1552,867,1095,1708,2332,843,462,2895,3652,2688,3011,5572,4344,2644,2735,6122,2361,3531,3964,1915,1200,9207,6054,3062,3102,2808,1843,1405,2288,1877,2235,2023,2039,871,39],
+  eng: [131,54,48,28,30,3,99,89,304,258,91,35,32,59,76,119,45,21,15,20,83,80,28,29,15,26,16,14,43,33,53,276,179,74,84,233,157,41,105,53,25,30,41,262,130,123,41,21,30,51,47,46,96,46,23,26,32,76,82,85,15,14,10,75,64,79,47,33,12,25,15,26,56,64,24,6,101,112,73,83,146,70,41,51,197,59,92,88,43,30,412,228,92,84,83,28,31,55,55,63,48,67,16,-1],
+  fNew: [10,14,4,1,5,2,17,15,12,23,17,6,4,12,5,600,14,8,7,5,13,25,20,24,16,4,4,6,16,7,14,22,25,14,10,47,50,26,20,21,12,17,11,24,15,20,5,14,21,18,12,14,4,10,6,10,13,13,20,14,3,2,8,10,12,5,12,6,1,4,5,10,11,10,6,2,25,16,42,17,18,12,5,16,14,5,10,10,8,2,48,27,18,18,10,3,5,20,17,12,11,14,1,0],
   demo: {
     "Job title": [["Founder","9%"], ["Co-Founder","8%"], ["Software Engineer","7%"], ["Chief Executive Officer","4%"], ["Board Member","1%"], ["Chief Technology Officer","1%"], ["Full Stack Engineer","1%"], ["Product Manager","1%"], ["Managing Director","1%"]],
     "Seniority": [["Senior","29%"], ["Entry","16%"], ["CXO","14%"], ["Owner","10%"], ["Director","8%"], ["Partner","6%"], ["VP","4%"], ["Manager","4%"], ["Training","< 1%"]],
@@ -395,56 +398,81 @@ const LI_DATA = {
     "Company": [["Netlify","1%"], ["Google","< 1%"], ["Microsoft","< 1%"], ["Stealth Startup","< 1%"], ["Amazon Web Services (AWS)","< 1%"], ["Databricks","< 1%"], ["Storyblok","< 1%"], ["Salesforce","< 1%"], ["MACH Alliance","< 1%"]]
   },
   posts: [
+    ["i-was-offered-to-be-acquired-by-firebase-share-7462532536204886016-UYNC","2026-05-19",27717,428],
+    ["in-2013-my-best-friend-chris-called-me-from-share-7461082980321509376-8ltL","2026-05-15",25312,622],
+    ["we-just-came-out-of-the-best-quarter-netlify-share-7465431637372243970-XU0A","2026-05-27",17642,463],
+    ["the-traditional-saas-model-is-probably-dead-share-7452021553741086720-6icA","2026-04-20",16907,209],
     ["reading-alice-in-wonderland-to-my-daughter-share-7478824894537908224-Wm2A","2026-07-03",16897,276],
     ["after-12-years-of-building-netlify-and-raising-share-7482448764025245697-aQSC","2026-07-13",15623,723],
+    ["the-best-website-weve-ever-built-isnt-for-share-7452755912269647874-o0hA","2026-04-22",12336,800],
+    ["i-got-a-big-prediction-wrong-we-went-into-share-7457108285087961088-_BH9","2026-05-04",11156,181],
+    ["today-were-removing-seat-based-pricing-from-share-7449882318606974976-QCj6","2026-04-14",10226,247],
+    ["three-ceos-five-days-one-story-cloudflare-share-7468376035240239104-u114","2026-06-04",8180,74],
     ["when-we-pivoted-netlify-around-agent-experience-share-7480229148905476096-TNqo","2026-07-07",7491,266],
+    ["i-hired-rtl-to-build-a-top-down-enterprise-share-7466156434171293696-S70E","2026-05-29",7105,133],
+    ["there-are-a-lot-of-strong-programmers-who-share-7463619703207317504-nAvg","2026-05-22",6788,147],
     ["today-our-episode-of-codetvs-greenfield-share-7478485668655050752-vjXi","2026-07-02",6519,147],
     ["everyone-is-reading-the-ai-layoffs-as-headcount-share-7473389064298258433-yjxT","2026-06-18",6209,72],
     ["three-roles-are-open-at-netlify-each-one-share-7480984116524527616-uPo6","2026-07-09",5493,113],
     ["last-week-netlify-crossed-16-million-users-share-7477375330807169025-hT9A","2026-06-29",5490,212],
+    ["were-replacing-our-customer-success-platform-share-7470474911589982208-K1DX","2026-06-10",5313,85],
     ["a-qualtrics-rep-called-to-congratulate-us-share-7473026689632092161-JkXS","2026-06-17",5246,71],
+    ["when-i-introduced-the-term-agent-experience-share-7468693148031098880-d-MV","2026-06-05",4991,126],
+    ["github-is-moving-copilot-to-usage-based-billing-share-7465054149970243584-Fszb","2026-05-26",4977,34],
     ["our-cfo-is-one-of-the-top-three-users-of-share-7473766583815987202-9WJB","2026-06-19",4653,89],
     ["i-learned-to-program-because-my-handwriting-share-7481361600449437697-X8t-","2026-07-10",4602,99],
+    ["everyone-is-talking-about-ai-making-teams-share-7450581916686155776-o-dG","2026-04-16",4168,83],
+    ["weve-built-an-entire-industry-around-managing-share-7453110440919863296-wcnd","2026-04-23",3946,83],
+    ["im-excited-to-announce-that-netlify-is-one-share-7455317485765136384-WFKM","2026-04-29",3893,89],
+    ["in-2010-wireds-editor-in-chief-published-share-7462910160265449474-o5SB","2026-05-20",3680,26],
+    ["last-week-i-watched-someone-go-from-i-have-share-7454937483454136320-U7bh","2026-04-28",3403,68],
     ["one-of-our-csms-sarah-mandel-built-a-whole-share-7477737731750707200-kZqX","2026-06-30",3363,75],
+    ["i-used-to-build-tools-that-made-our-agents-share-7470837275439063040-FoJH","2026-06-11",3288,101],
+    ["theres-too-much-talk-about-how-agents-make-share-7462170145008902144-8YuY","2026-05-18",3142,72],
+    ["our-hr-team-cancelled-their-culture-amp-subscription-share-7471214757094653952-cfoP","2026-06-12",3072,70],
     ["renewal-rates-went-up-17-points-after-our-share-7472664303901384707-sJSw","2026-06-16",2940,105],
+    ["for-years-the-phrase-we-heard-most-about-share-7465802829861916672-AtWp","2026-05-28",2839,37],
+    ["a-customer-called-us-two-weeks-ago-in-a-full-share-7467605979648520192-YCqf","2026-06-02",2592,43],
     ["trust-only-gets-you-in-the-door-what-matters-share-7476288180812570624-9_2P","2026-06-26",2456,60],
+    ["if-youve-been-sitting-on-an-idea-theres-share-7470142674474278912-uvfu","2026-06-09",2386,40],
+    ["one-of-our-sales-reps-saw-10-people-from-share-7467968401341313024-JHyz","2026-06-03",2320,41],
     ["we-thought-netlify-was-good-at-agent-experience-share-7475925786076643328-rQ_L","2026-06-25",2309,92],
+    ["a-lot-of-pure-technologists-tend-to-think-share-7454559992189456384-9RXK","2026-04-27",2200,40],
     ["theres-a-shift-happening-in-the-us-that-share-7483173537927688195-xqmh","2026-07-15",2106,45],
     ["in-2014-people-didnt-take-front-end-developers-share-7483535954323062784-C7-F","2026-07-16",2034,56],
+    ["when-we-started-netlify-deploying-a-website-share-7460720589822087169-VXmZ","2026-05-14",1833,36],
     ["my-bot-got-banned-for-being-a-bot-what-google-share-7482796322085896193-OfRt","2026-07-14",1795,40],
     ["at-netlify-we-have-four-values-they-werent-share-7485695179522482176-GSIC","2026-07-22",1737,51],
     ["disclaimer-i-coined-the-term-agent-experience-share-7478100108899749888-25J2","2026-07-01",1679,56],
+    ["im-excited-to-join-grace-gong-on-the-smart-share-7459995858210598912-BVWU","2026-05-12",1599,54],
+    ["venture-with-grace-ugcPost-7460721683788640257-VIqW","2026-05-14",1362,25],
     ["when-steve-jobs-came-back-to-apple-the-company-share-7484985476257468416-Ctha","2026-07-20",1297,42],
-    ["we-just-came-out-of-the-best-quarter-netlify-share-7465431637372243970-XU0A","2026-05-27",1223,8],
+    ["if-an-agent-needs-a-perfect-prompt-to-work-share-7458191529451626496-RYVO","2026-05-07",1248,36],
     ["us-vcs-invested-355b-last-year-all-of-europe-share-7483853019290255363-xSMe","2026-07-17",1209,37],
     ["the-companies-pushing-hardest-for-in-office-share-7486072646502273024-sUUi","2026-07-23",1199,35],
+    ["what-does-an-ideal-agent-experience-actually-share-7457462872928038912-eYcV","2026-05-05",1149,23],
     ["an-hr-business-partner-at-netlify-with-zero-share-7486419973179961345-0FCJ","2026-07-24",1119,50],
     ["on-a-recent-onsite-with-an-enterprise-customer-share-7475563389390352384-61uX","2026-06-24",1105,34],
-    ["our-hr-team-cancelled-their-culture-amp-subscription-share-7471214757094653952-cfoP","2026-06-12",1024,18],
-    ["were-replacing-our-customer-success-platform-share-7470474911589982208-K1DX","2026-06-10",1005,5],
-    ["i-used-to-build-tools-that-made-our-agents-share-7470837275439063040-FoJH","2026-06-11",925,26],
+    ["wohoo-here-we-go-share-7467240173060247552-8qAo","2026-06-01",930,21],
     ["your-coding-agent-cant-read-your-filename-share-7479923125485375489-UvpN","2026-07-06",765,30],
-    ["three-ceos-five-days-one-story-cloudflare-share-7468376035240239104-u114","2026-06-04",747,6],
-    ["when-i-introduced-the-term-agent-experience-share-7468693148031098880-d-MV","2026-06-05",722,3],
-    ["i-hired-rtl-to-build-a-top-down-enterprise-share-7466156434171293696-S70E","2026-05-29",687,11],
     ["microsoft-made-a-call-this-year-that-most-share-7485332784291561472-Jpy6","2026-07-21",677,26],
-    ["if-youve-been-sitting-on-an-idea-theres-share-7470142674474278912-uvfu","2026-06-09",560,8],
-    ["a-customer-called-us-two-weeks-ago-in-a-full-share-7467605979648520192-YCqf","2026-06-02",171,1],
-    ["one-of-our-sales-reps-saw-10-people-from-share-7467968401341313024-JHyz","2026-06-03",169,4],
-    ["i-was-offered-to-be-acquired-by-firebase-share-7462532536204886016-UYNC","2026-05-19",159,2],
-    ["for-years-the-phrase-we-heard-most-about-share-7465802829861916672-AtWp","2026-05-28",109,1],
-    ["github-is-moving-copilot-to-usage-based-billing-share-7465054149970243584-Fszb","2026-05-26",107,null],
-    ["the-best-website-weve-ever-built-isnt-for-share-7452755912269647874-o0hA","2026-04-22",104,null],
-    ["there-are-a-lot-of-strong-programmers-who-share-7463619703207317504-nAvg","2026-05-22",74,1],
-    ["in-2013-my-best-friend-chris-called-me-from-share-7461082980321509376-8ltL","2026-05-15",47,null],
-    ["wohoo-here-we-go-share-7467240173060247552-8qAo","2026-06-01",44,null],
-    ["the-traditional-saas-model-is-probably-dead-share-7452021553741086720-6icA","2026-04-20",40,null],
-    ["in-2010-wireds-editor-in-chief-published-share-7462910160265449474-o5SB","2026-05-20",32,1],
-    ["today-were-removing-seat-based-pricing-from-share-7449882318606974976-QCj6","2026-04-14",30,null],
-    ["i-got-a-big-prediction-wrong-we-went-into-share-7457108285087961088-_BH9","2026-05-04",27,null],
-    ["im-excited-to-join-grace-gong-on-the-smart-share-7459995858210598912-BVWU","2026-05-12",25,null],
-    ["theres-too-much-talk-about-how-agents-make-share-7462170145008902144-8YuY","2026-05-18",25,null],
-    ["im-excited-to-announce-that-netlify-is-one-share-7455317485765136384-WFKM","2026-04-29",20,null]
+    ["the-team-building-software-on-the-web-in-ugcPost-7452378396988338176-K1oC","2026-04-21",532,20],
+    ["79-of-organizations-have-adopted-ai-agents-share-7460358212991606785-KoPW","2026-05-13",429,11],
+    ["thanks-kubeconf-just-wrapped-up-my-keynote-share-7442860417992986624-7UVu","2026-03-26",209,4],
+    ["todays-app-of-the-day-im-actually-gonna-ugcPost-7443826359342198784-txe-","2026-03-28",122,8],
+    ["todays-app-mattventure-you-get-to-experience-share-7442389874990723073-KmXT","2026-03-24",116,6],
+    ["until-now-projects-on-netlify-always-started-share-7440100399786897408-WYMH","2026-03-18",103,1],
+    ["no-link-for-todays-purely-personal-app-share-7444274634809700352-tGtW","2026-03-29",79,2],
+    ["todays-big-launch-lets-anyone-prompt-claude-share-7440268353446846465-b3Hu","2026-03-18",73,1],
+    ["great-article-from-sanitys-knut-melv%C3%A6r-on-ugcPost-7444637872059543552-7ihJ","2026-03-30",67,2],
+    ["todays-app-took-a-lot-of-tweaking-and-playing-share-7442057012001210368-LmMM","2026-03-23",55,3],
+    ["todays-agent-run-is-not-a-new-app-but-my-share-7444635252133736448-s9KM","2026-03-30",49,null],
+    ["todays-app-is-brought-to-you-by-prompting-share-7441719718182440960-sr6O","2026-03-22",44,4],
+    ["todays-app-doesnt-work-yet-but-as-models-share-7442732740208173057-qvgO","2026-03-25",44,null],
+    ["8000000-developers-thats-how-many-share-7363614310855557121-Ynoa","2025-08-19",38,1],
+    ["last-week-my-personal-lobster-ai-agent-was-share-7432830780487262209-Zqq5","2026-02-26",28,1],
+    ["one-year-of-ax-share-7422684048558469120-u4pH","2026-01-29",27,null],
+    ["app-of-the-day-matchrater-ive-toyed-with-share-7443130075425771522-gQCT","2026-03-26",25,1]
   ]
 };
 
@@ -486,8 +514,8 @@ function fmtFull(n){ return n==null||isNaN(n) ? '—' : Number(n).toLocaleString
 function fmtPct(n){ return n==null||isNaN(n) ? '—' : n.toFixed(2)+'%'; }
 function pctNum(s){ if(s==null)return 0; s=String(s).trim(); if(s.indexOf('<')>=0)return 0.5; const v=parseFloat(s.replace('%','')); return isNaN(v)?0:v; }
 function addDays(iso,i){ const [y,m,d]=iso.split('-').map(Number); const dt=new Date(Date.UTC(y,m-1,d+i)); return dt.toISOString().slice(0,10); }
-function fmtDate(iso){ if(!iso)return '—'; const t=Date.parse(iso+(iso.length<=10?'T00:00:00Z':'')); return isNaN(t)?iso:new Date(t).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
-function fmtDateShort(iso){ const t=Date.parse(iso+'T00:00:00Z'); return new Date(t).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
+function fmtDate(iso){ if(!iso)return '—'; const t=Date.parse(iso+(iso.length<=10?'T00:00:00Z':'')); return isNaN(t)?iso:new Date(t).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}); }
+function fmtDateShort(iso){ const t=Date.parse(iso+'T00:00:00Z'); return new Date(t).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'}); }
 function esc(s){ return s==null?'':String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 function setStatus(msg, kind){ const el=document.getElementById('status-bar'); el.className=kind||''; el.innerHTML = kind==='loading' ? '<span class="spinner"></span>'+msg : msg; }
 
@@ -530,7 +558,7 @@ function renderOverview(){
 
   const snap = (LI_SNAPSHOT && LI_SNAPSHOT[liPeriod==='last7'?'last7':'overall']) || {};
   const membersVal = (snap.membersReached!=null) ? snap.membersReached : (LI.discovery&&LI.discovery.members);
-  const membersSub = (snap.membersReached!=null && liPeriod==='last7') ? 'unique, last 7 days' : 'unique, overall';
+  const membersSub = (snap.membersReached!=null && liPeriod==='last7') ? 'unique, last 7 days' : (snap.membersReachedNote ? ('unique · '+snap.membersReachedNote) : 'unique, overall');
 
   const cards = [
     { label:'Total Followers', value: fmtFull(LI.totFollowers), cls:'teal', sub: growthPct!=null ? `<span class="up">▲ ${pNewF.toLocaleString()}</span> in this period (${growthPct.toFixed(1)}% growth)` : '' },
@@ -556,7 +584,7 @@ function renderEngBreakdown(snap){
   const host=document.getElementById('eng-row'); if(!host) return;
   const e = snap && snap.engagement;
   if(!e){ host.innerHTML=''; return; }
-  const periodLbl = liPeriod==='last7' ? 'Last 7 days' : 'Overall';
+  const periodLbl = liPeriod==='last7' ? 'Last 7 days' : (snap.membersReachedNote || 'Overall');
   const rows = list => (list||[]).map(it=>`<div class="demo-row"><div class="demo-row-top"><span class="demo-row-label">${esc(it.label)}</span><span class="demo-row-pct">${fmtFull(it.value)}</span></div></div>`).join('');
   const block = (g,title) => g ? `<div><div class="brk-total">${fmtFull(g.total)}<span>${title}</span></div>${rows(g.items)}</div>` : '';
   host.innerHTML = `<div class="demo-card">
