@@ -25,11 +25,16 @@ with what LinkedIn shows.
 
 Currently loaded:
 
-| Person  | Report            | Source                          |
-| ------- | ----------------- | ------------------------------- |
-| Mathias | August 2026       | LinkedIn export, Aug 1 – Aug 31 |
-| Mathias | Apr 13 – Jul 27   | LinkedIn export                 |
-| RTL     | August 2026       | LinkedIn export, Aug 1 – Aug 31 |
+| Person  | Report          | Source                           |
+| ------- | --------------- | -------------------------------- |
+| Mathias | Apr 13 – Aug 31 | LinkedIn export, Apr 13 – Aug 31 |
+| Mathias | August 2026     | LinkedIn export, Aug 1 – Aug 31  |
+| RTL     | August 2026     | LinkedIn export, Aug 1 – Aug 31  |
+
+Prefer one export covering the whole span over stitching several together.
+Impressions and members reached are period-level figures LinkedIn computes
+over the range you ask for — members reached counts *unique* people, so it
+can never be recovered by adding two reports.
 
 ### Adding next month
 1. In LinkedIn: **Analytics → Export**, pick the month, download the `.xlsx`
@@ -42,8 +47,11 @@ Currently loaded:
    - `demo` / `contentDemo` — the AUDIENCE and CONTENT DEMOGRAPHICS sheets
    - `posts` — the TOP POSTS sheet, merging its engagements and impressions lists
      on Post URL; the optional 5th element is the post's opening line, used as its title
-   - `breakdown` — reactions / comments / reposts / saves / sends, which live on
-     LinkedIn's Engagement card rather than in the export
+   - `breakdown` — reactions / comments / reposts / saves / sends. These live on
+     LinkedIn's Engagement card, not in the export, so they are copied by hand
+     for the same range. Omit it rather than reuse another range's split: the
+     card renders only when present, and a total that undershoots the
+     Engagements figure is worse than no card.
 3. The period picker, the By Post tab and the Leaderboard pick it up automatically.
    The Leaderboard compares the newest period both people have.
 

@@ -268,91 +268,87 @@ const ICP_TABLE = 'netlify_icps';
 // the newest first. The period picker and the Leaderboard pick it up.
 // ═══════════════════════════════════════════════════════════════════
 
-const MATHIAS_APR_JUL = {
-  key: "apr-jul-2026", label: "Apr 13 - Jul 27",
-  src: "LinkedIn export (Aggregate Analytics)",
-  urlPrefix: "https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_",
-  start: "2026-04-13", end: "2026-07-27",
-  totFollowers: 6988,
-  discovery: { members: 108260 },
-  impr: [143,2919,2812,2218,1754,873,792,5509,5982,5043,5257,3526,1676,1548,2820,3017,3311,2295,1198,653,713,3567,5204,1938,1374,1203,689,588,755,1110,845,1775,9828,8147,2634,3119,11997,11359,3898,4880,3513,2163,2060,3341,8231,6011,6051,2933,2015,2624,2648,2839,2400,5952,2791,1525,1756,1731,3975,3341,3413,1282,829,930,2586,4208,4438,3181,2465,1321,1552,867,1095,1708,2332,843,462,2895,3652,2688,3011,5572,4344,2644,2735,6122,2361,3531,3964,1915,1200,9207,6054,3062,3102,2808,1843,1405,2288,1877,2235,2023,2052,885,759,1099],
-  eng: [3,131,54,48,28,30,3,99,89,304,258,91,35,32,59,76,119,45,21,15,20,83,80,28,29,15,26,16,14,43,33,53,276,179,74,84,233,157,41,105,53,24,30,41,262,130,123,41,21,30,51,47,46,96,46,23,26,32,76,82,85,15,14,10,75,64,79,47,33,12,25,15,26,56,64,24,6,101,112,73,83,146,70,41,51,197,59,92,88,43,30,412,228,92,84,83,28,31,55,55,63,47,64,16,18,32],
-  fNew: [1,10,14,4,1,5,2,17,15,12,23,17,6,4,12,5,600,14,8,7,5,13,25,20,24,16,4,4,6,16,7,14,22,25,14,10,47,50,26,20,21,12,17,11,24,15,20,5,14,21,18,12,14,4,10,6,10,13,13,20,14,3,2,8,10,12,5,12,6,1,4,5,10,11,10,6,2,25,16,42,17,18,12,5,16,14,5,10,10,8,2,48,27,18,18,10,3,5,20,17,12,11,14,1,2,5],
+const MATHIAS_APR_AUG = {
+  key: "apr-aug-2026",
+  label: "Apr 13 \u2013 Aug 31",
+  src: "LinkedIn \u2014 Mathias Biilmann Christensen",
+  start: "2026-04-13",
+  end: "2026-08-31",
+  totFollowers: 7376,
+  impr: [143,2919,2810,2220,1754,873,792,5504,5982,5042,5253,3526,1676,1548,2819,3012,3311,2294,1198,653,713,3567,5203,1936,1373,1203,689,588,754,1109,845,1775,9828,8147,2634,3119,11995,11359,3898,4880,3513,2163,2060,3341,8230,6010,6051,2933,2015,2623,2648,2839,2400,5952,2791,1525,1756,1728,3969,3338,3410,1282,829,929,2585,4208,4436,3180,2465,1321,1553,864,1095,1708,2331,843,462,2892,3652,2683,3010,5572,4344,2644,2735,6122,2361,3531,3964,1915,1200,9207,6053,3065,3102,2807,1843,1405,2286,1877,2233,2023,2051,885,759,1931,2482,2486,1424,1236,512,399,1058,2346,3306,5418,2709,1020,994,1265,1152,1358,937,13490,7126,1626,2786,3226,2703,2486,2395,1588,1127,1115,892,3404,3493,4768,2177,1327,1095],
+  eng: [3,131,54,48,28,30,3,99,89,304,258,91,35,32,59,76,119,45,21,15,19,83,80,28,29,15,26,16,14,43,33,53,276,179,74,84,233,157,41,105,53,24,30,41,262,130,122,40,21,30,51,47,46,96,46,23,26,32,76,82,85,15,14,10,75,64,79,47,33,12,24,15,26,56,64,24,6,101,112,73,83,146,70,41,51,197,59,92,88,43,30,412,228,92,84,83,28,31,55,55,63,47,64,16,17,41,48,44,31,34,10,13,33,48,86,152,60,19,14,27,28,30,26,217,87,41,79,85,96,81,88,38,39,32,32,203,107,176,67,36,33],
+  fNew: [1,10,14,4,1,5,2,17,15,12,23,17,6,4,12,5,600,14,8,7,5,13,25,20,24,16,4,4,6,16,7,14,22,25,14,10,47,50,26,20,21,12,17,11,24,15,20,5,14,21,18,12,14,4,10,6,10,13,13,20,14,3,2,8,10,12,5,12,6,1,4,5,10,11,10,6,2,25,16,42,17,18,12,5,16,14,5,10,10,8,2,48,27,18,18,10,3,5,20,17,12,11,14,1,2,11,9,12,15,10,8,6,13,11,17,48,36,8,4,14,18,32,14,27,19,8,9,17,15,36,11,3,5,13,9,9,18,15,6,9,5],
+  totals: {"impressions": 405408, "members": 131149, "inNetworkPct": 32, "outNetworkPct": 68, "engagements": 9797, "newFollowers": 2472},
+  prior: {"imprPct": 857, "note": "vs. prior 141 days, per LinkedIn"},
+  discovery: {"members": 131149, "inNetwork": "32%", "outOfNetwork": "68%"},
   demo: {
-    "Job title": [["Founder","9%"], ["Co-Founder","8%"], ["Software Engineer","7%"], ["Chief Executive Officer","4%"], ["Board Member","1%"], ["Chief Technology Officer","1%"], ["Full Stack Engineer","1%"], ["Product Manager","1%"], ["Managing Director","1%"]],
-    "Seniority": [["Senior","29%"], ["Entry","16%"], ["CXO","14%"], ["Owner","10%"], ["Director","8%"], ["Partner","6%"], ["VP","4%"], ["Manager","4%"], ["Training","< 1%"]],
-    "Industry": [["Software Development","28%"], ["Technology, Information and Internet","18%"], ["IT Services and IT Consulting","18%"], ["Venture Capital and Private Equity Principals","3%"], ["Financial Services","3%"], ["Advertising Services","2%"], ["Business Consulting and Services","2%"], ["Marketing Services","2%"], ["Design Services","1%"], ["Technology, Information and Media","1%"]],
-    "Location": [["San Francisco Bay Area","19%"], ["New York City Metropolitan Area","5%"], ["London Area, United Kingdom","3%"], ["Copenhagen Metropolitan Area","3%"], ["Los Angeles Metropolitan Area","2%"], ["Greater Bengaluru Area","2%"], ["Greater Seattle Area","2%"], ["Greater Toronto Area, Canada","2%"], ["Greater Boston","2%"]],
-    "Company size": [["2-10 employees","21%"], ["11-50 employees","19%"], ["51-200 employees","14%"], ["10,001+ employees","9%"], ["201-500 employees","7%"], ["1,001-5,000 employees","6%"], ["501-1,000 employees","5%"], ["0-1 employees","4%"], ["5,001-10,000 employees","2%"]],
-    "Company": [["Netlify","1%"], ["Google","< 1%"], ["Microsoft","< 1%"], ["Stealth Startup","< 1%"], ["Amazon Web Services (AWS)","< 1%"], ["Databricks","< 1%"], ["Storyblok","< 1%"], ["Salesforce","< 1%"], ["MACH Alliance","< 1%"]]
+    "Company": [["Netlify","1%"],["Stealth Startup","< 1%"],["Microsoft","< 1%"],["Google","< 1%"],["Amazon Web Services (AWS)","< 1%"],["Storyblok","< 1%"],["Databricks","< 1%"],["Salesforce","< 1%"],["Andreessen Horowitz","< 1%"]],
+    "Location": [["San Francisco Bay Area","19%"],["New York City Metropolitan Area","5%"],["London Area, United Kingdom","3%"],["Copenhagen Metropolitan Area","2%"],["Los Angeles Metropolitan Area","2%"],["Greater Bengaluru Area","2%"],["Greater Seattle Area","2%"],["Greater Toronto Area, Canada","2%"],["Greater Boston","2%"]],
+    "Company size": [["2-10 employees","21%"],["11-50 employees","19%"],["51-200 employees","13%"],["10,001+ employees","9%"],["201-500 employees","7%"],["1,001-5,000 employees","6%"],["501-1,000 employees","5%"],["0-1 employees","4%"],["5,001-10,000 employees","2%"]],
+    "Seniority": [["Senior","29%"],["Entry","16%"],["CXO","13%"],["Owner","10%"],["Director","8%"],["Partner","6%"],["VP","4%"],["Manager","4%"],["Training","< 1%"]],
+    "Job title": [["Founder","10%"],["Co-Founder","7%"],["Software Engineer","7%"],["Chief Executive Officer","4%"],["Board Member","2%"],["Chief Technology Officer","1%"],["Full Stack Engineer","1%"],["Product Manager","1%"],["Managing Director","< 1%"]],
+    "Industry": [["Software Development","28%"],["Technology, Information and Internet","18%"],["IT Services and IT Consulting","17%"],["Venture Capital and Private Equity Principals","3%"],["Financial Services","3%"],["Business Consulting and Services","2%"],["Advertising Services","2%"],["Marketing Services","2%"],["Technology, Information and Media","1%"],["Design Services","1%"]],
+  },
+  contentDemo: {
+    "Company": [["Google","< 1%"],["Microsoft","< 1%"],["Amazon Web Services (AWS)","< 1%"],["Salesforce","< 1%"],["Meta","< 1%"],["Amazon","< 1%"],["HubSpot","< 1%"],["Databricks","< 1%"],["Adobe","< 1%"]],
+    "Location": [["San Francisco Bay Area","11%"],["New York City Metropolitan Area","5%"],["London Area, United Kingdom","3%"],["Copenhagen Metropolitan Area","3%"],["Greater Seattle Area","2%"],["Greater Boston","2%"],["Los Angeles Metropolitan Area","2%"],["Greater Bengaluru Area","2%"],["Greater Toronto Area, Canada","2%"]],
+    "Company size": [["10,001+ employees","14%"],["11-50 employees","13%"],["51-200 employees","13%"],["2-10 employees","12%"],["1,001-5,000 employees","11%"],["201-500 employees","8%"],["501-1,000 employees","7%"],["5,001-10,000 employees","5%"]],
+    "Seniority": [["Senior","32%"],["Entry","21%"],["Director","9%"],["CXO","6%"],["Owner","6%"],["Manager","6%"],["VP","4%"],["Partner","3%"],["Training","< 1%"]],
+    "Job title": [["Software Engineer","13%"],["Founder","4%"],["Co-Founder","4%"],["Frontend Developer","2%"],["Full Stack Engineer","2%"],["Product Manager","2%"],["Chief Executive Officer","1%"],["Chief Technology Officer","1%"],["Engineering Manager","1%"]],
+    "Industry": [["Software Development","28%"],["IT Services and IT Consulting","17%"],["Technology, Information and Internet","13%"],["Financial Services","3%"],["Advertising Services","2%"],["Business Consulting and Services","2%"],["Design Services","2%"],["Venture Capital and Private Equity Principals","1%"],["Higher Education","1%"],["Computer and Network Security","1%"]],
   },
   posts: [
-    ["i-was-offered-to-be-acquired-by-firebase-share-7462532536204886016-UYNC","2026-05-19",27702,428,"I was offered to be acquired by Firebase in 2014."],
-    ["in-2013-my-best-friend-chris-called-me-from-share-7461082980321509376-8ltL","2026-05-15",25309,622,"In 2013, my best friend Chris called me from Denmark. He'd just been diagnosed with lymphoma."],
-    ["we-just-came-out-of-the-best-quarter-netlify-share-7465431637372243970-XU0A","2026-05-27",17565,461,"We just came out of the best quarter Netlify has ever had."],
-    ["reading-alice-in-wonderland-to-my-daughter-share-7478824894537908224-Wm2A","2026-07-03",16963,278,"Reading Alice in Wonderland to my daughter before she sleeps is the best thing in most of my days."],
-    ["the-traditional-saas-model-is-probably-dead-share-7452021553741086720-6icA","2026-04-20",16913,209,"The traditional SaaS model is probably dead."],
-    ["after-12-years-of-building-netlify-and-raising-share-7482448764025245697-aQSC","2026-07-13",15903,728,"After 12 years of building Netlify and raising over $212M, it's time to reintroduce myself."],
-    ["the-best-website-weve-ever-built-isnt-for-share-7452755912269647874-o0hA","2026-04-22",12340,800,"The best website we've ever built isn't for humans."],
-    ["i-got-a-big-prediction-wrong-we-went-into-share-7457108285087961088-_BH9","2026-05-04",11160,181,"I got a big prediction wrong."],
-    ["today-were-removing-seat-based-pricing-from-share-7449882318606974976-QCj6","2026-04-14",10230,247,"Today we're removing seat-based pricing from Netlify."],
-    ["three-ceos-five-days-one-story-cloudflare-share-7468376035240239104-u114","2026-06-04",8123,74,"Three CEOs. Five days. One story."],
-    ["when-we-pivoted-netlify-around-agent-experience-share-7480229148905476096-TNqo","2026-07-07",7501,266,"When we pivoted Netlify around Agent Experience, the person who moved fastest was our CTO."],
-    ["i-hired-rtl-to-build-a-top-down-enterprise-share-7466156434171293696-S70E","2026-05-29",7024,131,"I hired RTL to build a top-down enterprise sales engine. Now he's a Netlify power user."],
-    ["today-our-episode-of-codetvs-greenfield-share-7478485668655050752-vjXi","2026-07-02",6835,148,"Today our episode of CodeTV's Greenfield Games goes live!"],
-    ["there-are-a-lot-of-strong-programmers-who-share-7463619703207317504-nAvg","2026-05-22",6785,146,"There are a lot of strong programmers who are deeply into music, and that isn't random."],
-    ["everyone-is-reading-the-ai-layoffs-as-headcount-share-7473389064298258433-yjxT","2026-06-18",6209,72,"Everyone is reading the AI layoffs as headcount disappearing."],
-    ["last-week-netlify-crossed-16-million-users-share-7477375330807169025-hT9A","2026-06-29",5627,223,"Last week Netlify crossed 16 million users. Three weeks ago, it was 15 million."],
-    ["three-roles-are-open-at-netlify-each-one-share-7480984116524527616-uPo6","2026-07-09",5513,113,"Three roles are open at Netlify. Each one owns a number that decides how big we get."],
-    ["were-replacing-our-customer-success-platform-share-7470474911589982208-K1DX","2026-06-10",5256,85,"We're replacing our customer success platform with tools we built ourselves."],
-    ["a-qualtrics-rep-called-to-congratulate-us-share-7473026689632092161-JkXS","2026-06-17",5246,71,"A Qualtrics rep called to congratulate us on our growth. We used the call to cancel."],
-    ["github-is-moving-copilot-to-usage-based-billing-share-7465054149970243584-Fszb","2026-05-26",4970,34,"GitHub is moving Copilot to usage-based billing on June 1."],
-    ["when-i-introduced-the-term-agent-experience-share-7468693148031098880-d-MV","2026-06-05",4935,126,"When I introduced the term \"Agent Experience\" at our sales kickoff last year\u2026"],
-    ["our-cfo-is-one-of-the-top-three-users-of-share-7473766583815987202-9WJB","2026-06-19",4653,89,"Our CFO is one of the top three users of our agent runner product."],
-    ["i-learned-to-program-because-my-handwriting-share-7481361600449437697-X8t-","2026-07-10",4617,99,"I learned to program because my handwriting was unreadable."],
-    ["everyone-is-talking-about-ai-making-teams-share-7450581916686155776-o-dG","2026-04-16",4175,83,"Everyone is talking about AI making teams smaller and roadmaps faster."],
-    ["weve-built-an-entire-industry-around-managing-share-7453110440919863296-wcnd","2026-04-23",3953,83,"We've built an entire industry around managing structured content."],
-    ["im-excited-to-announce-that-netlify-is-one-share-7455317485765136384-WFKM","2026-04-29",3894,89,"I'm excited to announce that Netlify is one of Stripe's launch partners with Stripe Projects."],
-    ["in-2010-wireds-editor-in-chief-published-share-7462910160265449474-o5SB","2026-05-20",3678,26,"In 2010, Wired's editor-in-chief published a cover story declaring \"The Web Is Dead\"."],
-    ["last-week-i-watched-someone-go-from-i-have-share-7454937483454136320-U7bh","2026-04-28",3415,68,"Last week I watched someone go from \"I have an idea for an app\" to a working preview in two minutes."],
-    ["one-of-our-csms-sarah-mandel-built-a-whole-share-7477737731750707200-kZqX","2026-06-30",3368,76,"One of our CSMs built a whole onboarding app for our customers, unprompted, in a couple of hours."],
-    ["i-used-to-build-tools-that-made-our-agents-share-7470837275439063040-FoJH","2026-06-11",3186,97,"I used to build tools that made our agents dumber. Then one change became our biggest unlock."],
-    ["theres-too-much-talk-about-how-agents-make-share-7462170145008902144-8YuY","2026-05-18",3142,72,"There's too much talk about how agents make us more efficient."],
-    ["our-hr-team-cancelled-their-culture-amp-subscription-share-7471214757094653952-cfoP","2026-06-12",2949,67,"Our HR team cancelled their Culture Amp subscription when a leader built something better."],
-    ["renewal-rates-went-up-17-points-after-our-share-7472664303901384707-sJSw","2026-06-16",2940,105,"Renewal rates went up 17 points after our Customer Success team started building their own tools."],
-    ["for-years-the-phrase-we-heard-most-about-share-7465802829861916672-AtWp","2026-05-28",2834,37,"For years, the phrase we heard most about our CLI was: \"Netlify has great developer experience.\""],
-    ["a-customer-called-us-two-weeks-ago-in-a-full-share-7467605979648520192-YCqf","2026-06-02",2590,43,"A customer called us two weeks ago in a full panic."],
-    ["trust-only-gets-you-in-the-door-what-matters-share-7476288180812570624-9_2P","2026-06-26",2458,60,"Trust only gets you in the door \u2014 what matters is what you do next."],
-    ["if-youve-been-sitting-on-an-idea-theres-share-7470142674474278912-uvfu","2026-06-09",2345,40,"If you've been sitting on an idea, there's a path to making it real that didn't exist two years ago."],
-    ["we-thought-netlify-was-good-at-agent-experience-share-7475925786076643328-rQ_L","2026-06-25",2318,92,"We thought Netlify was good at agent experience. Then we measured it, and some scores stung."],
-    ["one-of-our-sales-reps-saw-10-people-from-share-7467968401341313024-JHyz","2026-06-03",2317,41,"One of our sales reps saw 10+ people from another company sign up for Netlify."],
-    ["a-lot-of-pure-technologists-tend-to-think-share-7454559992189456384-9RXK","2026-04-27",2203,40,"A lot of pure technologists tend to think there's a strict logic to how developer tools get adopted."],
-    ["in-2014-people-didnt-take-front-end-developers-share-7483535954323062784-C7-F","2026-07-16",2125,60,"In 2014, people didn't take front-end developers seriously."],
-    ["theres-a-shift-happening-in-the-us-that-share-7483173537927688195-xqmh","2026-07-15",2121,46,"There's a shift happening in the US that should matter to every builder working with AI."],
-    ["my-bot-got-banned-for-being-a-bot-what-google-share-7482796322085896193-OfRt","2026-07-14",1843,43,"My bot got banned for being a bot. What Google did next is the most encouraging thing I've seen."],
-    ["when-we-started-netlify-deploying-a-website-share-7460720589822087169-VXmZ","2026-05-14",1839,36,"When we started Netlify, deploying a website meant provisioning servers and configuring load balancers."],
-    ["at-netlify-we-have-four-values-they-werent-share-7485695179522482176-GSIC","2026-07-22",1806,54,"At Netlify we have four values. They weren't invented in a strategy offsite."],
-    ["disclaimer-i-coined-the-term-agent-experience-share-7478100108899749888-25J2","2026-07-01",1688,56,"DISCLAIMER: I coined the term agent experience. Take everything below with a grain of salt."],
-    ["im-excited-to-join-grace-gong-on-the-smart-share-7459995858210598912-BVWU","2026-05-12",1599,54,"I'm excited to join Grace Gong on the Smart Venture Podcast for a live conversation."],
-    ["venture-with-grace-ugcPost-7460721683788640257-VIqW","2026-05-14",1368,25,"We're live \u2014 Venture with Grace."],
-    ["when-steve-jobs-came-back-to-apple-the-company-share-7484985476257468416-Ctha","2026-07-20",1314,44,"When Steve Jobs came back to Apple, the company was building printers, mice, Newton and a lot else."],
-    ["an-hr-business-partner-at-netlify-with-zero-share-7486419973179961345-0FCJ","2026-07-24",1313,53,"An HR business partner at Netlify with zero coding background just replaced Culture Amp."]
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_i-was-offered-to-be-acquired-by-firebase-share-7462532536204886016-UYNC","2026-05-19",27743,428,"I was offered to be acquired by Firebase in 2014."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_in-2013-my-best-friend-chris-called-me-from-share-7461082980321509376-8ltL","2026-05-15",25347,623,"In 2013, my best friend Chris called me from Denmark. He'd just been diagnosed with lymphoma."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_im-going-to-be-honest-for-a-second-fatherhood-share-7494045182066274306-Tbfi","2026-08-14",22776,367,"I'm going to be honest for a second: fatherhood hasn't made me a better leader."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_we-just-came-out-of-the-best-quarter-netlify-share-7465431637372243970-XU0A","2026-05-27",17960,462,"We just came out of the best quarter Netlify has ever had."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_reading-alice-in-wonderland-to-my-daughter-share-7478824894537908224-Wm2A","2026-07-03",17340,286,"Reading Alice in Wonderland to my daughter before she sleeps is the best thing in most of my days."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_the-traditional-saas-model-is-probably-dead-share-7452021553741086720-6icA","2026-04-20",16924,208,"The traditional SaaS model is probably dead."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_after-12-years-of-building-netlify-and-raising-share-7482448764025245697-aQSC","2026-07-13",16553,753,"After 12 years of building Netlify and raising over $212M, it's time to reintroduce myself."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_the-best-website-weve-ever-built-isnt-for-share-7452755912269647874-o0hA","2026-04-22",12409,800,"The best website we've ever built isn't for humans."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_i-got-a-big-prediction-wrong-we-went-into-share-7457108285087961088-_BH9","2026-05-04",11170,181,"I got a big prediction wrong."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_today-were-removing-seat-based-pricing-from-share-7449882318606974976-QCj6","2026-04-14",10239,247,"Today we're removing seat-based pricing from Netlify."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_three-ceos-five-days-one-story-cloudflare-share-7468376035240239104-u114","2026-06-04",8137,74,"Three CEOs. Five days. One story."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_when-we-pivoted-netlify-around-agent-experience-share-7480229148905476096-TNqo","2026-07-07",7690,269,"When we pivoted Netlify around Agent Experience, the person who moved fastest was our CTO."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_ive-hired-my-share-of-people-that-interviewed-share-7490783703527333888-G5UY","2026-08-05",7609,182,"I've hired my share of people that interviewed really well and turned out to be the wrong fit."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_today-our-episode-of-codetvs-greenfield-share-7478485668655050752-vjXi","2026-07-02",7286,149,"Today our episode of CodeTV's Greenfield Games goes live!"],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_i-hired-rtl-to-build-a-top-down-enterprise-share-7466156434171293696-S70E","2026-05-29",7040,130,"I hired RTL to build a top-down enterprise sales engine. Now he's a Netlify power user."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_my-uber-driver-in-portland-builds-on-netlify-share-7498393841503477760-the1","2026-08-26",6942,303,"My Uber driver in Portland builds on Netlify."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_there-are-a-lot-of-strong-programmers-who-share-7463619703207317504-nAvg","2026-05-22",6800,146,"There are a lot of strong programmers who are deeply into music, and that isn't random."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_were-hiring-a-social-media-manager-to-free-share-7491146111039045632-lLCm","2026-08-06",6644,187,"We're hiring a Social Media Manager to free me from this hell."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_everyone-is-reading-the-ai-layoffs-as-headcount-share-7473389064298258433-yjxT","2026-06-18",6234,71,"Everyone is reading the AI layoffs as headcount disappearing."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_netlify-has-a-boomerang-problem-in-the-best-share-7499118612784484352-T3xH","2026-08-28",6232,206,"Netlify has a boomerang problem. In the best way possible."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_three-roles-are-open-at-netlify-each-one-share-7480984116524527616-uPo6","2026-07-09",5996,119,"Three roles are open at Netlify. Each one owns a number that decides how big we get."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_last-week-netlify-crossed-16-million-users-share-7477375330807169025-hT9A","2026-06-29",5847,226,"Last week Netlify crossed 16 million users. Three weeks ago, it was 15 million."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_were-replacing-our-customer-success-platform-share-7470474911589982208-K1DX","2026-06-10",5296,85,"We're replacing our customer success platform with tools we built ourselves."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_a-qualtrics-rep-called-to-congratulate-us-share-7473026689632092161-JkXS","2026-06-17",5291,73,"A Qualtrics rep called to congratulate us on our growth. We used the call to cancel."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_github-is-moving-copilot-to-usage-based-billing-share-7465054149970243584-Fszb","2026-05-26",4984,33,"GitHub is moving Copilot to usage-based billing on June 1."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_when-i-introduced-the-term-agent-experience-share-7468693148031098880-d-MV","2026-06-05",4962,126,"When I introduced the term \"Agent Experience\" at our sales kickoff last year…"],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_our-cfo-is-one-of-the-top-three-users-of-share-7473766583815987202-9WJB","2026-06-19",4696,89,"Our CFO is one of the top three users of our agent runner product."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_i-learned-to-program-because-my-handwriting-share-7481361600449437697-X8t-","2026-07-10",4693,99,"I learned to program because my handwriting was unreadable."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_everyone-is-talking-about-ai-making-teams-share-7450581916686155776-o-dG","2026-04-16",4190,83,"Everyone is talking about AI making teams smaller and roadmaps faster."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_weve-built-an-entire-industry-around-managing-share-7453110440919863296-wcnd","2026-04-23",3966,83,"We've built an entire industry around managing structured content."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_im-excited-to-announce-that-netlify-is-one-share-7455317485765136384-WFKM","2026-04-29",3902,89,"I'm excited to announce that Netlify is one of Stripe's launch partners with Stripe Projects."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_in-2010-wireds-editor-in-chief-published-share-7462910160265449474-o5SB","2026-05-20",3693,26,"In 2010, Wired's editor-in-chief published a cover story declaring \"The Web Is Dead\"."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_last-week-i-watched-someone-go-from-i-have-share-7454937483454136320-U7bh","2026-04-28",3426,68,"Last week I watched someone go from \"I have an idea for an app\" to a working preview in two minutes."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_one-of-our-csms-sarah-mandel-built-a-whole-share-7477737731750707200-kZqX","2026-06-30",3416,76,"One of our CSMs built a whole onboarding app for our customers, unprompted, in a couple of hours."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_we-walked-out-of-a-team-dinner-in-portland-share-7495494740381941760-c19c","2026-08-18",3345,125,"We walked out of a team dinner in Portland and ran into a llama."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_the-day-we-announced-netlifys-series-b-share-7490421343755132929-JU8a","2026-08-04",3245,52,"The day we announced Netlify's Series B, TechCrunch ran the raise next to an AI-generated note."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_i-used-to-build-tools-that-made-our-agents-share-7470837275439063040-FoJH","2026-06-11",3204,97,"I used to build tools that made our agents dumber. Then one change became our biggest unlock."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_theres-too-much-talk-about-how-agents-make-share-7462170145008902144-8YuY","2026-05-18",3157,72,"There's too much talk about how agents make us more efficient."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_our-hr-team-cancelled-their-culture-amp-subscription-share-7471214757094653952-cfoP","2026-06-12",2980,67,"Our HR team cancelled their Culture Amp subscription when a leader built something better."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_renewal-rates-went-up-17-points-after-our-share-7472664303901384707-sJSw","2026-06-16",2970,105,"Renewal rates went up 17 points after our Customer Success team started building their own tools."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_the-most-honest-bug-report-netlify-got-last-share-7487869507412140033-1PpZ","2026-07-28",2944,39,"The most honest bug report Netlify got last year came from Claude Code right after it launched."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_for-years-the-phrase-we-heard-most-about-share-7465802829861916672-AtWp","2026-05-28",2851,37,"For years, the phrase we heard most about our CLI was: \"Netlify has great developer experience.\""],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_i-used-to-get-paid-to-have-opinions-about-share-7496581897787985921-8sQx","2026-08-21",2781,106,"I used to get paid to have opinions about jazz."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_for-two-years-ive-liked-the-idea-of-open-share-7495132353120337920-X4oH","2026-08-17",2744,85,"For two years I've liked the idea of open weight models without wanting to use one."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_i-watched-two-people-use-the-exact-same-ai-share-7495857127823978497-tfnH","2026-08-19",2616,100,"I watched two people use the exact same AI tool for the same 90 minutes."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_a-customer-called-us-two-weeks-ago-in-a-full-share-7467605979648520192-YCqf","2026-06-02",2603,43,"A customer called us two weeks ago in a full panic."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_in-2014-people-didnt-take-front-end-developers-share-7483535954323062784-C7-F","2026-07-16",2568,64,"In 2014, people didn't take front-end developers seriously."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_we-thought-netlify-was-good-at-agent-experience-share-7475925786076643328-rQ_L","2026-06-25",2510,92,"We thought Netlify was good at agent experience. Then we measured it, and some scores stung."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_trust-only-gets-you-in-the-door-what-matters-share-7476288180812570624-9_2P","2026-06-26",2489,60,"Trust only gets you in the door — what matters is what you do next."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_if-youve-been-sitting-on-an-idea-theres-share-7470142674474278912-uvfu","2026-06-09",2355,40,"If you've been sitting on an idea, there's a path to making it real that didn't exist two years ago."],
   ]
-};
-
-// Engagement breakdown + members reached for the Apr-Jul report. These
-// live on LinkedIn's Discovery and Engagement cards rather than in the
-// daily export, so they are copied across by hand.
-MATHIAS_APR_JUL.breakdown = {
-  social: { total: 6834, items: [
-    { label:'Reactions', value:6010 }, { label:'Comments', value:572 },
-    { label:'Reposts', value:59 }, { label:'Saves', value:163 },
-    { label:'Sends on LinkedIn', value:30 }
-  ]},
-  link: { total: 719, items: [
-    { label:'Premium custom button engagements', value:73 },
-    { label:'Visits to links in all posts', value:646 }
-  ]}
 };
 
 const MATHIAS_AUG = {
@@ -650,12 +646,6 @@ const ICP_RTL = {
   ]
 };
 
-// Period-level figures from LinkedIn's own Apr 13 – Aug 31 view. Adding
-// two exports cannot produce these: the daily files miss Jul 28–31, and
-// members reached counts unique people, so summing double-counts anyone
-// who appeared in both windows. Replace when the span extends.
-const MATHIAS_FULL_RANGE = { impressions: 405399, members: 131149, inNetwork: '32%', outOfNetwork: '68%' };
-
 // ── PEOPLE ────────────────────────────────────────────────────────
 // `reports` newest first. `icpFile` is a CSV committed under /data,
 // rendered on the ICPs tab and downloadable from there.
@@ -664,7 +654,7 @@ const PEOPLE = {
     key:'mathias', tab:'Mathias', name:'Mathias Biilmann Christensen', short:'Mathias',
     role:'Co-founder & CEO, Netlify',
     profile:'https://www.linkedin.com/in/mathias-biilmann-christensen-a5a3805/',
-    reports:[mergeReports([MATHIAS_APR_JUL, MATHIAS_AUG], 'since-april', 'Apr 13 – Aug 31', MATHIAS_FULL_RANGE), MATHIAS_AUG], icp:ICP_MATHIAS,
+    reports:[MATHIAS_APR_AUG, MATHIAS_AUG], icp:ICP_MATHIAS,
     icpFile:{ path:'data/icp-mathias-2026-08.csv', label:'Mathias — ICP engagers', period:'Apr 14 – Aug 28, 2026' }
   },
   rtl: {
@@ -676,84 +666,6 @@ const PEOPLE = {
   }
 };
 const PERSON_KEYS = ['mathias','rtl'];
-
-// ── CONTINUOUS PERIOD ─────────────────────────────────────────────
-// Joins consecutive reports into one span (Apr 13 - latest) so the
-// overview can show the whole engagement to date, not just one export.
-//
-// Three things do NOT simply add up across exports, and are handled
-// rather than fudged:
-//   - Days no export covers (Jul 28-31) become null: they leave a flat
-//     step in the cumulative charts instead of a false dip to zero.
-//   - Members reached counts UNIQUE members, so summing two periods
-//     double-counts anyone who saw posts in both. It is left null and
-//     the Discovery card says so.
-//   - Demographics are percentages of different populations, so the
-//     newest report's are shown rather than an invented blend.
-// A single export covering the whole span would carry all three exactly;
-// drop one in as its own report and it takes precedence.
-function daysBetween(a, b){ return Math.round((Date.parse(b+'T00:00:00Z') - Date.parse(a+'T00:00:00Z')) / 86400000); }
-function mergeReports(reports, key, label, observed){
-  const rs = [...reports].sort((x,y)=> x.start < y.start ? -1 : 1);
-  const first = rs[0], last = rs[rs.length-1];
-  const span = daysBetween(first.start, last.end) + 1;
-  const impr = new Array(span).fill(null), eng = new Array(span).fill(null), fNew = new Array(span).fill(null);
-  rs.forEach(r => {
-    const off = daysBetween(first.start, r.start);
-    (r.impr||[]).forEach((v,i)=> impr[off+i] = v);
-    (r.eng ||[]).forEach((v,i)=> eng [off+i] = v);
-    (r.fNew||[]).forEach((v,i)=> fNew[off+i] = v);
-  });
-  const addBrk = which => {
-    const totals = {};
-    rs.forEach(r => ((r.breakdown && r.breakdown[which] && r.breakdown[which].items) || [])
-      .forEach(it => totals[it.label] = (totals[it.label]||0) + it.value));
-    const items = Object.entries(totals).map(([label,value])=>({label,value}));
-    return items.length ? { total: items.reduce((s,i)=>s+i.value,0), items } : null;
-  };
-  const postId = url => String(url).replace(/^.*-(?:share|ugcPost|activity)-(\d+)-.*$/, '$1');
-  const posts = [];
-  const seen = new Map();
-  rs.forEach(r => (r.posts||[]).forEach(p => {
-    // Slugs carry a urlPrefix; normalise to a full URL so one list can mix reports.
-    const full = /^https?:\/\//.test(p[0]) ? p : [ (r.urlPrefix||'') + p[0], ...p.slice(1) ];
-    const id = postId(full[0]), prev = seen.get(id);
-    // The same post can appear in two exports with different windows of
-    // impressions; keep the larger, which is the longer-observed figure.
-    if (!prev) { seen.set(id, full); posts.push(full); }
-    else if ((full[2]||0) > (prev[2]||0)) posts[posts.indexOf(prev)] = full, seen.set(id, full);
-  }));
-  const dailyImpr = impr.reduce((s,v)=>s+(v||0),0);
-  const gapDays = impr.filter(v=>v===null).length;
-  const o = observed || {};
-  // Impressions and members reached for the whole span are taken from
-  // LinkedIn's own full-range view where we have it, because the daily
-  // exports miss the uncovered days and unique members never sum.
-  const missing = (o.impressions != null) ? o.impressions - dailyImpr : null;
-  return {
-    key, label, src: 'LinkedIn exports (joined)', start: first.start, end: last.end,
-    totFollowers: last.totFollowers,
-    impr, eng, fNew,
-    totals: { impressions: (o.impressions != null) ? o.impressions : dailyImpr, members: o.members ?? null },
-    dailyImpr,
-    gapNote: gapDays
-      ? `Jul 28–31 (${gapDays} days) is covered by no daily export. Impressions and members reached come from LinkedIn's own ${first.start} – ${last.end} view and include those days${missing!=null?` — the ${missing.toLocaleString()} impressions missing from the daily curve`:''}. Engagements and new followers are summed from the daily files, so they still exclude them.`
-      : null,
-    discovery: {
-      members: o.members ?? null,
-      inNetwork: o.inNetwork || null,
-      outOfNetwork: o.outOfNetwork || null,
-      membersNote: (o.members == null)
-        ? 'Members reached counts unique people, so it cannot be added across exports. Switch to a single report period to see it.'
-        : 'Unique members who saw at least one post between ' + first.start + ' and ' + last.end + '.'
-    },
-    breakdown: { social: addBrk('social'), link: addBrk('link') },
-    demo: last.demo, contentDemo: last.contentDemo,
-    demoNote: 'from ' + last.label,
-    gapDays,
-    posts
-  };
-}
 
 // ── STATE ─────────────────────────────────────────────────────────
 let activeTab = 'mathias';
@@ -893,7 +805,6 @@ function renderOverview(personKey){
       </div>
       <div class="range-label">${last7?'Last 7 days · ':''}${fmtDateShort(startDate)} – ${fmtDate(rep.end)}</div>
     </div>
-    ${(!last7 && rep.gapNote) ? `<p class="lb-foot" style="margin:-8px 0 14px">${esc(rep.gapNote)}</p>` : ''}
     <div class="metric-grid">${cards.map(c=>`
       <div class="mcard"><div class="mcard-label">${c.label}</div><div class="mcard-value ${c.cls}">${c.value}</div>${c.sub?`<div class="mcard-sub">${c.sub}</div>`:''}</div>`).join('')}</div>
     <div class="chart-row">
