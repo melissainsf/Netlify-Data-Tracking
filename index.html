@@ -650,6 +650,12 @@ const ICP_RTL = {
   ]
 };
 
+// Period-level figures from LinkedIn's own Apr 13 – Aug 31 view. Adding
+// two exports cannot produce these: the daily files miss Jul 28–31, and
+// members reached counts unique people, so summing double-counts anyone
+// who appeared in both windows. Replace when the span extends.
+const MATHIAS_FULL_RANGE = { impressions: 405399, members: 131149, inNetwork: '32%', outOfNetwork: '68%' };
+
 // ── PEOPLE ────────────────────────────────────────────────────────
 // `reports` newest first. `icpFile` is a CSV committed under /data,
 // rendered on the ICPs tab and downloadable from there.
@@ -658,7 +664,7 @@ const PEOPLE = {
     key:'mathias', tab:'Mathias', name:'Mathias Biilmann Christensen', short:'Mathias',
     role:'Co-founder & CEO, Netlify',
     profile:'https://www.linkedin.com/in/mathias-biilmann-christensen-a5a3805/',
-    reports:[mergeReports([MATHIAS_APR_JUL, MATHIAS_AUG], 'since-april', 'Apr 13 – Aug 31'), MATHIAS_AUG], icp:ICP_MATHIAS,
+    reports:[mergeReports([MATHIAS_APR_JUL, MATHIAS_AUG], 'since-april', 'Apr 13 – Aug 31', MATHIAS_FULL_RANGE), MATHIAS_AUG], icp:ICP_MATHIAS,
     icpFile:{ path:'data/icp-mathias-2026-08.csv', label:'Mathias — ICP engagers', period:'Apr 14 – Aug 28, 2026' }
   },
   rtl: {
@@ -687,7 +693,7 @@ const PERSON_KEYS = ['mathias','rtl'];
 // A single export covering the whole span would carry all three exactly;
 // drop one in as its own report and it takes precedence.
 function daysBetween(a, b){ return Math.round((Date.parse(b+'T00:00:00Z') - Date.parse(a+'T00:00:00Z')) / 86400000); }
-function mergeReports(reports, key, label){
+function mergeReports(reports, key, label, observed){
   const rs = [...reports].sort((x,y)=> x.start < y.start ? -1 : 1);
   const first = rs[0], last = rs[rs.length-1];
   const span = daysBetween(first.start, last.end) + 1;
@@ -717,16 +723,34 @@ function mergeReports(reports, key, label){
     if (!prev) { seen.set(id, full); posts.push(full); }
     else if ((full[2]||0) > (prev[2]||0)) posts[posts.indexOf(prev)] = full, seen.set(id, full);
   }));
+  const dailyImpr = impr.reduce((s,v)=>s+(v||0),0);
+  const gapDays = impr.filter(v=>v===null).length;
+  const o = observed || {};
+  // Impressions and members reached for the whole span are taken from
+  // LinkedIn's own full-range view where we have it, because the daily
+  // exports miss the uncovered days and unique members never sum.
+  const missing = (o.impressions != null) ? o.impressions - dailyImpr : null;
   return {
     key, label, src: 'LinkedIn exports (joined)', start: first.start, end: last.end,
     totFollowers: last.totFollowers,
     impr, eng, fNew,
-    totals: { impressions: impr.reduce((s,v)=>s+(v||0),0), members: null },
-    discovery: { members: null, membersNote: 'Members reached counts unique people, so it cannot be added across exports. Switch to a single report period to see it.' },
+    totals: { impressions: (o.impressions != null) ? o.impressions : dailyImpr, members: o.members ?? null },
+    dailyImpr,
+    gapNote: gapDays
+      ? `Jul 28–31 (${gapDays} days) is covered by no daily export. Impressions and members reached come from LinkedIn's own ${first.start} – ${last.end} view and include those days${missing!=null?` — the ${missing.toLocaleString()} impressions missing from the daily curve`:''}. Engagements and new followers are summed from the daily files, so they still exclude them.`
+      : null,
+    discovery: {
+      members: o.members ?? null,
+      inNetwork: o.inNetwork || null,
+      outOfNetwork: o.outOfNetwork || null,
+      membersNote: (o.members == null)
+        ? 'Members reached counts unique people, so it cannot be added across exports. Switch to a single report period to see it.'
+        : 'Unique members who saw at least one post between ' + first.start + ' and ' + last.end + '.'
+    },
     breakdown: { social: addBrk('social'), link: addBrk('link') },
     demo: last.demo, contentDemo: last.contentDemo,
     demoNote: 'from ' + last.label,
-    gapDays: impr.filter(v=>v===null).length,
+    gapDays,
     posts
   };
 }
@@ -828,7 +852,9 @@ function renderOverview(personKey){
   const sIdx = last7 ? Math.max(0, rep.fNew.length-7) : 0;
   const slice = a => last7 ? (a||[]).slice(-7) : (a||[]);
   const impr = slice(rep.impr), eng = slice(rep.eng), fNew = slice(rep.fNew);
-  const pImpr = sum(impr), pEng = sum(eng), pNewF = sum(fNew);
+  const dailyImpr = sum(impr);
+  const pImpr = (!last7 && rep.totals && rep.totals.impressions != null) ? rep.totals.impressions : dailyImpr;
+  const pEng = sum(eng), pNewF = sum(fNew);
   const rate = pImpr ? (pEng/pImpr*100) : null;
   const growthPct = (rep.totFollowers-pNewF) > 0 ? (pNewF/(rep.totFollowers-pNewF)*100) : null;
   const startDate = addDays(rep.start, sIdx);
@@ -865,8 +891,9 @@ function renderOverview(personKey){
         <button class="${last7?'':'active'}" onclick="setWindow('${personKey}','full')">Full period</button>
         <button class="${last7?'active':''}" onclick="setWindow('${personKey}','last7')">Last 7 days</button>
       </div>
-      <div class="range-label">${last7?'Last 7 days · ':''}${fmtDateShort(startDate)} – ${fmtDate(rep.end)}${(!last7 && rep.gapDays) ? ` · <span title="No LinkedIn export covers these days, so they are excluded rather than counted as zero">${rep.gapDays} days not covered</span>` : ''}</div>
+      <div class="range-label">${last7?'Last 7 days · ':''}${fmtDateShort(startDate)} – ${fmtDate(rep.end)}</div>
     </div>
+    ${(!last7 && rep.gapNote) ? `<p class="lb-foot" style="margin:-8px 0 14px">${esc(rep.gapNote)}</p>` : ''}
     <div class="metric-grid">${cards.map(c=>`
       <div class="mcard"><div class="mcard-label">${c.label}</div><div class="mcard-value ${c.cls}">${c.value}</div>${c.sub?`<div class="mcard-sub">${c.sub}</div>`:''}</div>`).join('')}</div>
     <div class="chart-row">
