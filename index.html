@@ -144,6 +144,43 @@ footer{text-align:center;padding:24px;font-size:11px;color:var(--ink3)}
 @media(max-width:700px){.brk-grid{grid-template-columns:1fr}}
 .brk-total{font-family:'Syne',sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;margin-bottom:10px}
 .brk-total span{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink3);letter-spacing:0;margin-left:4px}
+/* PERSON HEADER */
+.person-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.person-name{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;letter-spacing:-0.01em}
+.person-role{font-size:12px;color:var(--ink3)}
+/* LEADERBOARD (T-CHART) */
+.lb-eyebrow{font-family:'Syne',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}
+.lb-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:700;letter-spacing:-0.025em;margin-bottom:4px}
+.lb-title .vs{color:var(--ink3);font-weight:500}
+.lb-sub{font-size:12px;color:var(--ink2);margin-bottom:22px}
+.lb-lede{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.lb-lede-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);border-top:3px solid var(--teal-mid)}
+.lb-lede-card.b{border-top-color:var(--blue-mid)}
+.lb-lede-who{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.lb-lede-card.b .lb-lede-who{color:var(--blue)}
+.lb-lede-text{font-size:13px;color:var(--ink);line-height:1.55}
+.lb-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+table.lb{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+table.lb th,table.lb td{padding:11px 18px;border-bottom:1px solid var(--border)}
+table.lb tr:last-child td{border-bottom:none}
+.lb-people th{background:var(--surface2);vertical-align:bottom}
+.lb-people th.metric-col{width:34%}
+.lb-person{display:flex;flex-direction:column;gap:3px;text-align:left}
+.lb-person-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;letter-spacing:-0.01em;color:var(--ink);text-transform:none}
+.lb-person-role{font-size:11px;font-weight:400;color:var(--ink3);text-transform:none;letter-spacing:0}
+.lb-person-foll{font-family:'Syne',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-top:6px;display:flex;align-items:baseline;gap:8px;text-transform:none}
+.lb-person-foll small{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:400;color:var(--ink3);letter-spacing:0}
+.lb-chip{display:inline-block;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:1px 7px;border-radius:999px;background:var(--teal-light);color:var(--teal);letter-spacing:0}
+.lb-group td{background:var(--surface2);font-family:'Syne',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);padding-top:9px;padding-bottom:9px}
+.lb-metric{font-size:13px;color:var(--ink)}
+.lb-metric small{display:block;font-size:11px;color:var(--ink3);margin-top:1px}
+.lb-val{text-align:right;font-size:15px;color:var(--ink2);width:33%}
+.lb-val.win{background:var(--teal-light);color:var(--teal);font-weight:600}
+.lb-foot{font-size:11px;color:var(--ink3);margin-top:14px}
+@media(max-width:700px){.lb-lede{grid-template-columns:1fr}table.lb th,table.lb td{padding:9px 12px}}
+/* ICP LIST FILTER */
+.icp-filter{flex:1;min-width:200px;max-width:320px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;background:var(--surface);color:var(--ink)}
+.icp-scroll{max-height:520px;overflow:auto}
 </style>
 </head>
 <body>
@@ -178,74 +215,26 @@ footer{text-align:center;padding:24px;font-size:11px;color:var(--ink3)}
   </div>
 </header>
 
-<div class="tab-nav">
-  <button class="tab-btn active" onclick="switchTab(event,'overview')">Performance Metrics Overview</button>
-  <button class="tab-btn" onclick="switchTab(event,'posts')">By Post Performance</button>
-  <button class="tab-btn" onclick="switchTab(event,'icps')">ICPs</button>
-</div>
+<div class="tab-nav" id="tab-nav"></div>
 
 <main>
   <div id="status-bar"></div>
 
-  <!-- TAB 1: Performance Metrics Overview -->
-  <div id="tab-overview" class="tab-content active">
-    <div class="toolbar">
-      <div class="seg">
-        <button id="seg-last7" onclick="setPeriod('last7')">Last 7 days</button>
-        <button id="seg-overall" class="active" onclick="setPeriod('overall')">Overall</button>
-      </div>
-      <div class="range-label" id="range-label"></div>
-    </div>
-    <div class="metric-grid" id="overview-metrics"></div>
-    <div class="chart-row">
-      <div class="chart-card">
-        <div class="chart-card-title">Follower Growth</div>
-        <div class="chart-card-sub" id="sub-followers">Cumulative new followers</div>
-        <div class="chart-wrap"><canvas id="chart-followers"></canvas></div>
-      </div>
-      <div class="chart-card">
-        <div class="chart-card-title">Impressions</div>
-        <div class="chart-card-sub" id="sub-impr">Cumulative impressions</div>
-        <div class="chart-wrap"><canvas id="chart-impr"></canvas></div>
-      </div>
-    </div>
-    <div class="chart-row">
-      <div class="chart-card">
-        <div class="chart-card-title">Engagements</div>
-        <div class="chart-card-sub" id="sub-eng">Cumulative engagements (reactions + comments + reposts)</div>
-        <div class="chart-wrap"><canvas id="chart-eng"></canvas></div>
-      </div>
-      <div class="demo-card">
-        <div class="demo-head">
-          <div class="demo-title">Top Demographics <span class="muted" style="font-weight:400">· audience overall</span></div>
-          <div class="demo-tabs" id="demo-tabs"></div>
-        </div>
-        <div id="demo-body"></div>
-      </div>
-    </div>
+  <!-- Per-person tabs (built by JS from PEOPLE) -->
+  <div id="tab-mathias" class="tab-content active"></div>
+  <div id="tab-mathias-posts" class="tab-content"></div>
+  <div id="tab-rtl" class="tab-content"></div>
+  <div id="tab-rtl-posts" class="tab-content"></div>
 
-    <!-- ENGAGEMENT BREAKDOWN (manual weekly LinkedIn snapshot) -->
-    <div id="eng-row"></div>
+  <!-- Leaderboard: head-to-head T-chart -->
+  <div id="tab-leaderboard" class="tab-content"></div>
 
-    <!-- ICP ENGAGEMENT REPORT (from periodic ICP report upload) -->
-    <div id="icp-report"></div>
-  </div>
-
-  <!-- TAB 2: By Post Performance -->
-  <div id="tab-posts" class="tab-content">
-    <div class="toolbar"><div class="range-label">Mathias Biilmann's top-performing LinkedIn posts</div></div>
-    <div class="table-card">
-      <div class="table-wrap">
-        <table id="posts-table"><thead><tr id="posts-head"></tr></thead><tbody id="posts-body"></tbody></table>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 3: ICPs -->
+  <!-- ICPs -->
   <div id="tab-icps" class="tab-content">
     <div class="icp-toolbar">
       <button class="btn" onclick="document.getElementById('icp-file').click()">+ Upload ICP CSV</button>
       <input type="file" id="icp-file" accept=".csv,text/csv" style="display:none" onchange="handleIcpUpload(event)">
+      <input class="icp-filter" id="icp-filter" placeholder="Filter by name, company or role…" oninput="renderIcpLists()">
       <span class="muted" id="icp-status"></span>
     </div>
     <div id="icp-lists"></div>
@@ -261,122 +250,26 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { detectSe
 const ALLOWED_DOMAINS = ['netlify.com', 'virio.ai'];
 const ICP_TABLE = 'netlify_icps';
 
-// ── ICP ENGAGEMENT REPORT ─────────────────────────────────────────
-// Source: periodic ICP Engagement Report (PDF). Two period slots:
-//   overall — the full-period report (refresh every week or two)
-//   last7   — the weekly last-7-day report (null until provided)
-// The dashboard's Last 7 days / Overall toggle switches between them.
-// Top engagers with "Netlify" in their role are auto-excluded at render.
-const ICP_REPORT = {
-  overall: {
-  subject: 'Mathias Biilmann Christensen · Netlify',
-  posts: 75,
-  periodStart: '2026-04-14',
-  periodEnd: '2026-07-24',
-  prepared: '2026-07-25',
-  summary: {
-    text: 'Across 75 posts from 2026-04-14 to 2026-07-24, 2,122 unique people engaged. After excluding 26 Netlify employees/team members, 1,511 engagers (71%) match at least one of the four ICP personas defined in the Netlify content audience ICP.',
-    metrics: [
-      { label:'Total engagers',         count:2122, share:'100%' },
-      { label:'Netlify staff excluded', count:26,   share:'1%'   },
-      { label:'ICP engagers',           count:1511, share:'71%'  },
-      { label:'Non-ICP engagers',       count:585,  share:'28%'  }
-    ]
-  },
-  personas: [
-    { name:'Developer / Software Engineer', engagers:654, pct:'43%', avg:3.2 },
-    { name:'Influencer / Technical Leader', engagers:505, pct:'34%', avg:4.8 },
-    { name:'Business Leader (CMO/CFO/PM)',  engagers:273, pct:'18%', avg:4.1 },
-    { name:'Non-Developer Builder',         engagers:79,  pct:'5%',  avg:3.0 }
-  ],
-  topEngagers: [
-    { name:'Jan Pilgaard Carlsen',   company:'Culttech Accelerator',   persona:'Biz',   eng:33, posts:33 },
-    { name:'Mona Nasiri',            company:'Cohesity',               persona:'Biz',   eng:31, posts:31 },
-    { name:'Christian (Chris) Bach', company:'Stealth',                persona:'Infl.', eng:30, posts:30 },
-    { name:'Boris de Wit',           company:'Starboat',               persona:'Infl.', eng:28, posts:28 },
-    { name:'Deb Mukherjee',          company:'Layers',                 persona:'Biz',   eng:26, posts:26 },
-    { name:'Phanindra Reddy',        company:'Every-ai.com',           persona:'Infl.', eng:26, posts:26 },
-    { name:'Mitchell Seaton',        company:'NRMA Parks and Resorts', persona:'Dev',   eng:25, posts:25 },
-    { name:'Michael Carter',         company:'Boardy',                 persona:'Infl.', eng:24, posts:24 },
-    { name:'Tania Chakraborty',      company:'–',                      persona:'Biz',   eng:23, posts:23 },
-    { name:'Barry D’Arcy',           company:'Partnership Leaders',    persona:'Biz',   eng:21, posts:21 },
-    { name:'Brian Gentile',          company:'–',                      persona:'Infl.', eng:21, posts:21 },
-    { name:'Dan Barak',              company:'–',                      persona:'Biz',   eng:20, posts:20 },
-    { name:'Dr Claire Knight',       company:'Sailhouse',              persona:'Dev',   eng:19, posts:19 },
-    { name:'Rasmus Leth Skjoldan',   company:'Hello Retail',           persona:'Biz',   eng:19, posts:19 },
-    { name:'Michael Badamo',         company:'–',                      persona:'Dev',   eng:17, posts:17 },
-    { name:'Wade Warren',            company:'–',                      persona:'Dev',   eng:17, posts:17 },
-    { name:'Samuel Snopko',          company:'–',                      persona:'Biz',   eng:16, posts:16 },
-    { name:'Dustin Schau',           company:'Postman',                persona:'Biz',   eng:16, posts:16 },
-    { name:'Avishay Cohen',          company:'Anima App (YC S18)',     persona:'Infl.', eng:16, posts:16 },
-    { name:'Andrei Gaspar',          company:'–',                      persona:'Biz',   eng:16, posts:16 }
-  ],
-  contentInsights: [
-    'Agent Experience (AX) posts consistently attract the highest ICP rates (83–93%) — the single strongest ICP magnet. Five of the top 10 posts by ICP rate are AX topics.',
-    'Top ICP post (published May 5, 2026): “Agent Experience / Netlify.ai” — 93% ICP rate, 14 ICP of 15 total.',
-    'Highest-volume ICP post (published Apr 14, 2026): “Pricing / Unlimited seats” — 85% ICP rate, 179 ICP of 210 total.',
-    'Original posts average 85.7 reactions vs 14.5 for reposts (5.9x per post); the 58 original posts produce 95% of all reactions.',
-    'Developer / Software Engineer is the largest ICP segment at 43% (654 of 1,511).',
-    'Influencers & technical leaders make up 34% (505), reflecting AX and build-vs-buy thought leadership.',
-    'Business leaders engage deepest: 273 in ICP average 4.1 engagements each vs 3.2 for developers.',
-    'Builder segment underrepresented: only 79 engagers (5% of ICP) match the non-dev builder persona.',
-    'Sustained engagement: 113 ICP engagers hit 5+ posts, 47 hit 10+ posts.',
-    'Outreach priority (outreach.csv, 1,511 rows): 47 warm (10+ posts), 66 personalized DM (5–9), 324 light touch (3–4), 1,074 monitor (1–2).'
-  ]
-  },
-  // Weekly last-7-day report — same shape as `overall` above (subject,
-  // posts, periodStart, periodEnd, prepared, summary, personas,
-  // topEngagers, contentInsights). Send me each week's report and I'll
-  // drop it in here. While null, the Last 7 days view shows an empty state.
-  last7: null
-};
+// ═══════════════════════════════════════════════════════════════════
+// DATA
+//
+// Everything below is baked into the repo, so a refresh is a GitHub push
+// and nothing else — no external data store, no API keys.
+//
+// Each person has one or more REPORTS. A report is one LinkedIn
+// "Aggregate Analytics" export: daily impressions / engagements / new
+// followers, the discovery + engagement breakdown cards, audience and
+// content demographics, and the top-posts lists. Reports never overlap
+// and are never stitched together, so every figure on screen comes from
+// a single export and reconciles with what LinkedIn shows.
+//
+// To add next month: export from LinkedIn (Analytics -> Export, pick the
+// month), add a report object to that person's `reports` array, and put
+// the newest first. The period picker and the Leaderboard pick it up.
+// ═══════════════════════════════════════════════════════════════════
 
-// ── LINKEDIN WEEKLY SNAPSHOT (manual) ─────────────────────────────
-// Numbers pasted from LinkedIn's native analytics cards. Each week, update
-// `last7`; update `overall` every week or two. Members reached and the
-// engagement breakdown aren't in the daily feed, so they live here.
-// Set a section to null to hide it for that period.
-const LI_SNAPSHOT = {
-  last7: {
-    membersReached: 7164,
-    engagement: {
-      social: { total: 320, items: [
-        { label:'Reactions',          value:265 },
-        { label:'Comments',           value:38  },
-        { label:'Reposts',            value:5   },
-        { label:'Saves',              value:11  },
-        { label:'Sends on LinkedIn',  value:1   }
-      ]},
-      link: { total: 9, items: [
-        { label:'Premium custom button engagements', value:8 },
-        { label:'Visits to links in all posts',      value:1 }
-      ]}
-    }
-  },
-  overall: {
-    membersReached: 108260,
-    engagement: {
-      social: { total: 6834, items: [
-        { label:'Reactions',          value:6010 },
-        { label:'Comments',           value:572  },
-        { label:'Reposts',            value:59   },
-        { label:'Saves',              value:163  },
-        { label:'Sends on LinkedIn',  value:30   }
-      ]},
-      link: { total: 719, items: [
-        { label:'Premium custom button engagements', value:73  },
-        { label:'Visits to links in all posts',      value:646 }
-      ]}
-    }
-  }
-};
-
-// ── LINKEDIN LIVE FEED (manual, from LinkedIn Aggregate Analytics export) ──
-// Baked into the repo so updates are GitHub -> Netlify only (no external data
-// store). Single export covering the full engagement period Apr 13 - Jul 27,
-// 2026. Daily arrays are date-aligned from `start` to `end`. To refresh,
-// replace with a new full-range export.
-const LI_DATA = {
+const MATHIAS_APR_JUL = {
+  key: "apr-jul-2026", label: "Apr 13 - Jul 27",
   src: "LinkedIn export (Aggregate Analytics)",
   urlPrefix: "https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_",
   start: "2026-04-13", end: "2026-07-27",
@@ -394,62 +287,393 @@ const LI_DATA = {
     "Company": [["Netlify","1%"], ["Google","< 1%"], ["Microsoft","< 1%"], ["Stealth Startup","< 1%"], ["Amazon Web Services (AWS)","< 1%"], ["Databricks","< 1%"], ["Storyblok","< 1%"], ["Salesforce","< 1%"], ["MACH Alliance","< 1%"]]
   },
   posts: [
-    ["i-was-offered-to-be-acquired-by-firebase-share-7462532536204886016-UYNC","2026-05-19",27702,428],
-    ["in-2013-my-best-friend-chris-called-me-from-share-7461082980321509376-8ltL","2026-05-15",25309,622],
-    ["we-just-came-out-of-the-best-quarter-netlify-share-7465431637372243970-XU0A","2026-05-27",17565,461],
-    ["reading-alice-in-wonderland-to-my-daughter-share-7478824894537908224-Wm2A","2026-07-03",16963,278],
-    ["the-traditional-saas-model-is-probably-dead-share-7452021553741086720-6icA","2026-04-20",16913,209],
-    ["after-12-years-of-building-netlify-and-raising-share-7482448764025245697-aQSC","2026-07-13",15903,728],
-    ["the-best-website-weve-ever-built-isnt-for-share-7452755912269647874-o0hA","2026-04-22",12340,800],
-    ["i-got-a-big-prediction-wrong-we-went-into-share-7457108285087961088-_BH9","2026-05-04",11160,181],
-    ["today-were-removing-seat-based-pricing-from-share-7449882318606974976-QCj6","2026-04-14",10230,247],
-    ["three-ceos-five-days-one-story-cloudflare-share-7468376035240239104-u114","2026-06-04",8123,74],
-    ["when-we-pivoted-netlify-around-agent-experience-share-7480229148905476096-TNqo","2026-07-07",7501,266],
-    ["i-hired-rtl-to-build-a-top-down-enterprise-share-7466156434171293696-S70E","2026-05-29",7024,131],
-    ["today-our-episode-of-codetvs-greenfield-share-7478485668655050752-vjXi","2026-07-02",6835,148],
-    ["there-are-a-lot-of-strong-programmers-who-share-7463619703207317504-nAvg","2026-05-22",6785,146],
-    ["everyone-is-reading-the-ai-layoffs-as-headcount-share-7473389064298258433-yjxT","2026-06-18",6209,72],
-    ["last-week-netlify-crossed-16-million-users-share-7477375330807169025-hT9A","2026-06-29",5627,223],
-    ["three-roles-are-open-at-netlify-each-one-share-7480984116524527616-uPo6","2026-07-09",5513,113],
-    ["were-replacing-our-customer-success-platform-share-7470474911589982208-K1DX","2026-06-10",5256,85],
-    ["a-qualtrics-rep-called-to-congratulate-us-share-7473026689632092161-JkXS","2026-06-17",5246,71],
-    ["github-is-moving-copilot-to-usage-based-billing-share-7465054149970243584-Fszb","2026-05-26",4970,34],
-    ["when-i-introduced-the-term-agent-experience-share-7468693148031098880-d-MV","2026-06-05",4935,126],
-    ["our-cfo-is-one-of-the-top-three-users-of-share-7473766583815987202-9WJB","2026-06-19",4653,89],
-    ["i-learned-to-program-because-my-handwriting-share-7481361600449437697-X8t-","2026-07-10",4617,99],
-    ["everyone-is-talking-about-ai-making-teams-share-7450581916686155776-o-dG","2026-04-16",4175,83],
-    ["weve-built-an-entire-industry-around-managing-share-7453110440919863296-wcnd","2026-04-23",3953,83],
-    ["im-excited-to-announce-that-netlify-is-one-share-7455317485765136384-WFKM","2026-04-29",3894,89],
-    ["in-2010-wireds-editor-in-chief-published-share-7462910160265449474-o5SB","2026-05-20",3678,26],
-    ["last-week-i-watched-someone-go-from-i-have-share-7454937483454136320-U7bh","2026-04-28",3415,68],
-    ["one-of-our-csms-sarah-mandel-built-a-whole-share-7477737731750707200-kZqX","2026-06-30",3368,76],
-    ["i-used-to-build-tools-that-made-our-agents-share-7470837275439063040-FoJH","2026-06-11",3186,97],
-    ["theres-too-much-talk-about-how-agents-make-share-7462170145008902144-8YuY","2026-05-18",3142,72],
-    ["our-hr-team-cancelled-their-culture-amp-subscription-share-7471214757094653952-cfoP","2026-06-12",2949,67],
-    ["renewal-rates-went-up-17-points-after-our-share-7472664303901384707-sJSw","2026-06-16",2940,105],
-    ["for-years-the-phrase-we-heard-most-about-share-7465802829861916672-AtWp","2026-05-28",2834,37],
-    ["a-customer-called-us-two-weeks-ago-in-a-full-share-7467605979648520192-YCqf","2026-06-02",2590,43],
-    ["trust-only-gets-you-in-the-door-what-matters-share-7476288180812570624-9_2P","2026-06-26",2458,60],
-    ["if-youve-been-sitting-on-an-idea-theres-share-7470142674474278912-uvfu","2026-06-09",2345,40],
-    ["we-thought-netlify-was-good-at-agent-experience-share-7475925786076643328-rQ_L","2026-06-25",2318,92],
-    ["one-of-our-sales-reps-saw-10-people-from-share-7467968401341313024-JHyz","2026-06-03",2317,41],
-    ["a-lot-of-pure-technologists-tend-to-think-share-7454559992189456384-9RXK","2026-04-27",2203,40],
-    ["in-2014-people-didnt-take-front-end-developers-share-7483535954323062784-C7-F","2026-07-16",2125,60],
-    ["theres-a-shift-happening-in-the-us-that-share-7483173537927688195-xqmh","2026-07-15",2121,46],
-    ["my-bot-got-banned-for-being-a-bot-what-google-share-7482796322085896193-OfRt","2026-07-14",1843,43],
-    ["when-we-started-netlify-deploying-a-website-share-7460720589822087169-VXmZ","2026-05-14",1839,36],
-    ["at-netlify-we-have-four-values-they-werent-share-7485695179522482176-GSIC","2026-07-22",1806,54],
-    ["disclaimer-i-coined-the-term-agent-experience-share-7478100108899749888-25J2","2026-07-01",1688,56],
-    ["im-excited-to-join-grace-gong-on-the-smart-share-7459995858210598912-BVWU","2026-05-12",1599,54],
-    ["venture-with-grace-ugcPost-7460721683788640257-VIqW","2026-05-14",1368,25],
-    ["when-steve-jobs-came-back-to-apple-the-company-share-7484985476257468416-Ctha","2026-07-20",1314,44],
-    ["an-hr-business-partner-at-netlify-with-zero-share-7486419973179961345-0FCJ","2026-07-24",1313,53]
+    ["i-was-offered-to-be-acquired-by-firebase-share-7462532536204886016-UYNC","2026-05-19",27702,428,"I was offered to be acquired by Firebase in 2014."],
+    ["in-2013-my-best-friend-chris-called-me-from-share-7461082980321509376-8ltL","2026-05-15",25309,622,"In 2013, my best friend Chris called me from Denmark. He'd just been diagnosed with lymphoma."],
+    ["we-just-came-out-of-the-best-quarter-netlify-share-7465431637372243970-XU0A","2026-05-27",17565,461,"We just came out of the best quarter Netlify has ever had."],
+    ["reading-alice-in-wonderland-to-my-daughter-share-7478824894537908224-Wm2A","2026-07-03",16963,278,"Reading Alice in Wonderland to my daughter before she sleeps is the best thing in most of my days."],
+    ["the-traditional-saas-model-is-probably-dead-share-7452021553741086720-6icA","2026-04-20",16913,209,"The traditional SaaS model is probably dead."],
+    ["after-12-years-of-building-netlify-and-raising-share-7482448764025245697-aQSC","2026-07-13",15903,728,"After 12 years of building Netlify and raising over $212M, it's time to reintroduce myself."],
+    ["the-best-website-weve-ever-built-isnt-for-share-7452755912269647874-o0hA","2026-04-22",12340,800,"The best website we've ever built isn't for humans."],
+    ["i-got-a-big-prediction-wrong-we-went-into-share-7457108285087961088-_BH9","2026-05-04",11160,181,"I got a big prediction wrong."],
+    ["today-were-removing-seat-based-pricing-from-share-7449882318606974976-QCj6","2026-04-14",10230,247,"Today we're removing seat-based pricing from Netlify."],
+    ["three-ceos-five-days-one-story-cloudflare-share-7468376035240239104-u114","2026-06-04",8123,74,"Three CEOs. Five days. One story."],
+    ["when-we-pivoted-netlify-around-agent-experience-share-7480229148905476096-TNqo","2026-07-07",7501,266,"When we pivoted Netlify around Agent Experience, the person who moved fastest was our CTO."],
+    ["i-hired-rtl-to-build-a-top-down-enterprise-share-7466156434171293696-S70E","2026-05-29",7024,131,"I hired RTL to build a top-down enterprise sales engine. Now he's a Netlify power user."],
+    ["today-our-episode-of-codetvs-greenfield-share-7478485668655050752-vjXi","2026-07-02",6835,148,"Today our episode of CodeTV's Greenfield Games goes live!"],
+    ["there-are-a-lot-of-strong-programmers-who-share-7463619703207317504-nAvg","2026-05-22",6785,146,"There are a lot of strong programmers who are deeply into music, and that isn't random."],
+    ["everyone-is-reading-the-ai-layoffs-as-headcount-share-7473389064298258433-yjxT","2026-06-18",6209,72,"Everyone is reading the AI layoffs as headcount disappearing."],
+    ["last-week-netlify-crossed-16-million-users-share-7477375330807169025-hT9A","2026-06-29",5627,223,"Last week Netlify crossed 16 million users. Three weeks ago, it was 15 million."],
+    ["three-roles-are-open-at-netlify-each-one-share-7480984116524527616-uPo6","2026-07-09",5513,113,"Three roles are open at Netlify. Each one owns a number that decides how big we get."],
+    ["were-replacing-our-customer-success-platform-share-7470474911589982208-K1DX","2026-06-10",5256,85,"We're replacing our customer success platform with tools we built ourselves."],
+    ["a-qualtrics-rep-called-to-congratulate-us-share-7473026689632092161-JkXS","2026-06-17",5246,71,"A Qualtrics rep called to congratulate us on our growth. We used the call to cancel."],
+    ["github-is-moving-copilot-to-usage-based-billing-share-7465054149970243584-Fszb","2026-05-26",4970,34,"GitHub is moving Copilot to usage-based billing on June 1."],
+    ["when-i-introduced-the-term-agent-experience-share-7468693148031098880-d-MV","2026-06-05",4935,126,"When I introduced the term \"Agent Experience\" at our sales kickoff last year\u2026"],
+    ["our-cfo-is-one-of-the-top-three-users-of-share-7473766583815987202-9WJB","2026-06-19",4653,89,"Our CFO is one of the top three users of our agent runner product."],
+    ["i-learned-to-program-because-my-handwriting-share-7481361600449437697-X8t-","2026-07-10",4617,99,"I learned to program because my handwriting was unreadable."],
+    ["everyone-is-talking-about-ai-making-teams-share-7450581916686155776-o-dG","2026-04-16",4175,83,"Everyone is talking about AI making teams smaller and roadmaps faster."],
+    ["weve-built-an-entire-industry-around-managing-share-7453110440919863296-wcnd","2026-04-23",3953,83,"We've built an entire industry around managing structured content."],
+    ["im-excited-to-announce-that-netlify-is-one-share-7455317485765136384-WFKM","2026-04-29",3894,89,"I'm excited to announce that Netlify is one of Stripe's launch partners with Stripe Projects."],
+    ["in-2010-wireds-editor-in-chief-published-share-7462910160265449474-o5SB","2026-05-20",3678,26,"In 2010, Wired's editor-in-chief published a cover story declaring \"The Web Is Dead\"."],
+    ["last-week-i-watched-someone-go-from-i-have-share-7454937483454136320-U7bh","2026-04-28",3415,68,"Last week I watched someone go from \"I have an idea for an app\" to a working preview in two minutes."],
+    ["one-of-our-csms-sarah-mandel-built-a-whole-share-7477737731750707200-kZqX","2026-06-30",3368,76,"One of our CSMs built a whole onboarding app for our customers, unprompted, in a couple of hours."],
+    ["i-used-to-build-tools-that-made-our-agents-share-7470837275439063040-FoJH","2026-06-11",3186,97,"I used to build tools that made our agents dumber. Then one change became our biggest unlock."],
+    ["theres-too-much-talk-about-how-agents-make-share-7462170145008902144-8YuY","2026-05-18",3142,72,"There's too much talk about how agents make us more efficient."],
+    ["our-hr-team-cancelled-their-culture-amp-subscription-share-7471214757094653952-cfoP","2026-06-12",2949,67,"Our HR team cancelled their Culture Amp subscription when a leader built something better."],
+    ["renewal-rates-went-up-17-points-after-our-share-7472664303901384707-sJSw","2026-06-16",2940,105,"Renewal rates went up 17 points after our Customer Success team started building their own tools."],
+    ["for-years-the-phrase-we-heard-most-about-share-7465802829861916672-AtWp","2026-05-28",2834,37,"For years, the phrase we heard most about our CLI was: \"Netlify has great developer experience.\""],
+    ["a-customer-called-us-two-weeks-ago-in-a-full-share-7467605979648520192-YCqf","2026-06-02",2590,43,"A customer called us two weeks ago in a full panic."],
+    ["trust-only-gets-you-in-the-door-what-matters-share-7476288180812570624-9_2P","2026-06-26",2458,60,"Trust only gets you in the door \u2014 what matters is what you do next."],
+    ["if-youve-been-sitting-on-an-idea-theres-share-7470142674474278912-uvfu","2026-06-09",2345,40,"If you've been sitting on an idea, there's a path to making it real that didn't exist two years ago."],
+    ["we-thought-netlify-was-good-at-agent-experience-share-7475925786076643328-rQ_L","2026-06-25",2318,92,"We thought Netlify was good at agent experience. Then we measured it, and some scores stung."],
+    ["one-of-our-sales-reps-saw-10-people-from-share-7467968401341313024-JHyz","2026-06-03",2317,41,"One of our sales reps saw 10+ people from another company sign up for Netlify."],
+    ["a-lot-of-pure-technologists-tend-to-think-share-7454559992189456384-9RXK","2026-04-27",2203,40,"A lot of pure technologists tend to think there's a strict logic to how developer tools get adopted."],
+    ["in-2014-people-didnt-take-front-end-developers-share-7483535954323062784-C7-F","2026-07-16",2125,60,"In 2014, people didn't take front-end developers seriously."],
+    ["theres-a-shift-happening-in-the-us-that-share-7483173537927688195-xqmh","2026-07-15",2121,46,"There's a shift happening in the US that should matter to every builder working with AI."],
+    ["my-bot-got-banned-for-being-a-bot-what-google-share-7482796322085896193-OfRt","2026-07-14",1843,43,"My bot got banned for being a bot. What Google did next is the most encouraging thing I've seen."],
+    ["when-we-started-netlify-deploying-a-website-share-7460720589822087169-VXmZ","2026-05-14",1839,36,"When we started Netlify, deploying a website meant provisioning servers and configuring load balancers."],
+    ["at-netlify-we-have-four-values-they-werent-share-7485695179522482176-GSIC","2026-07-22",1806,54,"At Netlify we have four values. They weren't invented in a strategy offsite."],
+    ["disclaimer-i-coined-the-term-agent-experience-share-7478100108899749888-25J2","2026-07-01",1688,56,"DISCLAIMER: I coined the term agent experience. Take everything below with a grain of salt."],
+    ["im-excited-to-join-grace-gong-on-the-smart-share-7459995858210598912-BVWU","2026-05-12",1599,54,"I'm excited to join Grace Gong on the Smart Venture Podcast for a live conversation."],
+    ["venture-with-grace-ugcPost-7460721683788640257-VIqW","2026-05-14",1368,25,"We're live \u2014 Venture with Grace."],
+    ["when-steve-jobs-came-back-to-apple-the-company-share-7484985476257468416-Ctha","2026-07-20",1314,44,"When Steve Jobs came back to Apple, the company was building printers, mice, Newton and a lot else."],
+    ["an-hr-business-partner-at-netlify-with-zero-share-7486419973179961345-0FCJ","2026-07-24",1313,53,"An HR business partner at Netlify with zero coding background just replaced Culture Amp."]
   ]
 };
 
-let LI = null;             // LinkedIn analytics document
-let liPeriod = 'overall';  // 'overall' | 'last7'
-let demoCat = null;
+// Engagement breakdown + members reached for the Apr-Jul report. These
+// live on LinkedIn's Discovery and Engagement cards rather than in the
+// daily export, so they are copied across by hand.
+MATHIAS_APR_JUL.breakdown = {
+  social: { total: 6834, items: [
+    { label:'Reactions', value:6010 }, { label:'Comments', value:572 },
+    { label:'Reposts', value:59 }, { label:'Saves', value:163 },
+    { label:'Sends on LinkedIn', value:30 }
+  ]},
+  link: { total: 719, items: [
+    { label:'Premium custom button engagements', value:73 },
+    { label:'Visits to links in all posts', value:646 }
+  ]}
+};
+
+const MATHIAS_AUG = {
+  key: "aug-2026",
+  label: "August 2026",
+  src: "LinkedIn \u2014 Mathias Biilmann Christensen",
+  start: "2026-08-01",
+  end: "2026-08-31",
+  totFollowers: 7375,
+  impr: [512,399,1058,2346,3306,5418,2709,1020,994,1265,1152,1358,937,13490,7126,1626,2786,3226,2703,2486,2395,1588,1127,1115,892,3404,3493,4768,2177,1327,920],
+  eng: [10,13,33,48,86,152,60,19,14,27,28,30,26,217,87,41,79,85,96,81,88,38,39,32,32,203,107,176,67,36,28],
+  fNew: [8,6,13,11,17,48,36,8,4,14,18,32,14,27,19,8,9,17,15,36,11,3,5,13,9,9,18,15,6,9,4],
+  totals: {"impressions": 79123, "members": 31122, "inNetworkPct": 36, "outNetworkPct": 64, "socialEng": 2039, "reactions": 1848, "comments": 129, "reposts": 6, "saves": 49, "sends": 7, "linkEng": 39, "newFollowers": 462},
+  prior: {"imprPct": -11, "followersPct": 6, "note": "vs. prior 31 days, per LinkedIn"},
+  discovery: {"members": 31122, "inNetwork": "36%", "outOfNetwork": "64%"},
+  breakdown: {"social": {"total": 2039, "items": [{"label": "Reactions", "value": 1848}, {"label": "Comments", "value": 129}, {"label": "Reposts", "value": 6}, {"label": "Saves", "value": 49}, {"label": "Sends on LinkedIn", "value": 7}]}, "link": {"total": 39, "items": [{"label": "Premium custom button engagements", "value": 39}]}},
+  demo: {
+    "Company": [["Netlify","1%"],["Stealth Startup","< 1%"],["Microsoft","< 1%"],["Google","< 1%"],["Amazon Web Services (AWS)","< 1%"],["Storyblok","< 1%"],["Databricks","< 1%"],["Salesforce","< 1%"],["Andreessen Horowitz","< 1%"]],
+    "Location": [["San Francisco Bay Area","19%"],["New York City Metropolitan Area","5%"],["London Area, United Kingdom","3%"],["Copenhagen Metropolitan Area","2%"],["Los Angeles Metropolitan Area","2%"],["Greater Bengaluru Area","2%"],["Greater Seattle Area","2%"],["Greater Toronto Area, Canada","2%"],["Greater Boston","2%"]],
+    "Company size": [["2-10 employees","21%"],["11-50 employees","19%"],["51-200 employees","13%"],["10,001+ employees","9%"],["201-500 employees","7%"],["1,001-5,000 employees","6%"],["501-1,000 employees","5%"],["0-1 employees","4%"],["5,001-10,000 employees","2%"]],
+    "Seniority": [["Senior","29%"],["Entry","16%"],["CXO","13%"],["Owner","10%"],["Director","8%"],["Partner","6%"],["VP","4%"],["Manager","4%"],["Training","< 1%"]],
+    "Job title": [["Founder","10%"],["Co-Founder","7%"],["Software Engineer","7%"],["Chief Executive Officer","4%"],["Board Member","2%"],["Chief Technology Officer","1%"],["Full Stack Engineer","1%"],["Product Manager","1%"],["Managing Director","< 1%"]],
+    "Industry": [["Software Development","28%"],["Technology, Information and Internet","18%"],["IT Services and IT Consulting","17%"],["Venture Capital and Private Equity Principals","3%"],["Financial Services","3%"],["Business Consulting and Services","2%"],["Advertising Services","2%"],["Marketing Services","2%"],["Technology, Information and Media","1%"],["Design Services","1%"]],
+  },
+  contentDemo: {
+    "Company": [["Microsoft","< 1%"],["Google","< 1%"],["Amazon Web Services (AWS)","< 1%"],["Apple","< 1%"],["Salesforce","< 1%"],["Okta","< 1%"],["Amazon","< 1%"],["Meta","< 1%"],["Snowflake","< 1%"]],
+    "Location": [["San Francisco Bay Area","18%"],["New York City Metropolitan Area","6%"],["Greater Seattle Area","3%"],["London Area, United Kingdom","3%"],["Greater Boston","3%"],["Los Angeles Metropolitan Area","2%"],["Greater Toronto Area, Canada","2%"],["Greater Chicago Area","2%"],["Austin, Texas Metropolitan Area","2%"]],
+    "Company size": [["10,001+ employees","17%"],["51-200 employees","12%"],["11-50 employees","12%"],["1,001-5,000 employees","12%"],["2-10 employees","12%"],["201-500 employees","8%"],["501-1,000 employees","7%"],["5,001-10,000 employees","6%"]],
+    "Seniority": [["Senior","31%"],["Entry","17%"],["Director","11%"],["CXO","7%"],["Manager","7%"],["VP","6%"],["Owner","6%"],["Partner","4%"],["Training","< 1%"]],
+    "Job title": [["Software Engineer","8%"],["Founder","5%"],["Co-Founder","4%"],["Product Manager","2%"],["Chief Executive Officer","2%"],["Account Executive","1%"],["Managing Director","< 1%"],["Engineering Manager","< 1%"],["Frontend Developer","< 1%"]],
+    "Industry": [["Software Development","26%"],["Technology, Information and Internet","15%"],["IT Services and IT Consulting","15%"],["Financial Services","4%"],["Advertising Services","2%"],["Business Consulting and Services","2%"],["Venture Capital and Private Equity Principals","2%"],["Marketing Services","1%"],["Design Services","1%"],["Computer and Network Security","1%"]],
+  },
+  posts: [
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_im-going-to-be-honest-for-a-second-fatherhood-share-7494045182066274306-Tbfi","2026-08-14",22774,367,"I'm going to be honest for a second: fatherhood hasn't made me a better leader."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_ive-hired-my-share-of-people-that-interviewed-share-7490783703527333888-G5UY","2026-08-05",7609,182,"I've hired my share of people that interviewed really well and turned out to be the wrong fit."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_my-uber-driver-in-portland-builds-on-netlify-share-7498393841503477760-the1","2026-08-26",6904,303,"My Uber driver in Portland builds on Netlify."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_were-hiring-a-social-media-manager-to-free-share-7491146111039045632-lLCm","2026-08-06",6630,187,"We're hiring a Social Media Manager to free me from this hell."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_netlify-has-a-boomerang-problem-in-the-best-share-7499118612784484352-T3xH","2026-08-28",6153,204,"Netlify has a boomerang problem. In the best way possible."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_we-walked-out-of-a-team-dinner-in-portland-share-7495494740381941760-c19c","2026-08-18",3338,125,"We walked out of a team dinner in Portland and ran into a llama."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_the-day-we-announced-netlifys-series-b-share-7490421343755132929-JU8a","2026-08-04",3244,52,"The day we announced Netlify's Series B, TechCrunch ran the raise next to an AI-generated note."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_i-used-to-get-paid-to-have-opinions-about-share-7496581897787985921-8sQx","2026-08-21",2781,106,"I used to get paid to have opinions about jazz."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_for-two-years-ive-liked-the-idea-of-open-share-7495132353120337920-X4oH","2026-08-17",2744,85,"For two years I've liked the idea of open weight models without wanting to use one."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_i-watched-two-people-use-the-exact-same-ai-share-7495857127823978497-tfnH","2026-08-19",2612,100,"I watched two people use the exact same AI tool for the same 90 minutes."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_everyone-in-enterprise-ai-is-racing-to-give-share-7492958068498944000--1vh","2026-08-11",2072,50,"Everyone in enterprise AI is racing to give agents more access. Snowflake spent its money on the opposite."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_the-best-people-dont-join-because-they-think-share-7493320398269243395-JTlO","2026-08-12",1599,44,"The best people don't join because they think they're joining a rocket ship."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_i-took-a-year-off-from-university-to-work-share-7498756214986817536-Tlda","2026-08-27",1323,58,"I took a year off from university to work in a supermarket."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_a-ciso-at-a-large-enterprise-recently-demanded-share-7496219543523139587-D4H0","2026-08-20",1128,43,"A CISO at a large enterprise recently demanded we take down a site immediately."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_the-more-ai-transforms-everything-the-more-share-7490058912562593792-OxHH","2026-08-03",866,38,"The more AI transforms everything, the more you need really strong technologists."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_98-of-enterprises-now-manage-ai-spending-share-7493682807483908096-qx9f","2026-08-13",762,21,"98% of enterprises now manage AI spending, up from 63% a year ago."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_the-requests-that-hurt-our-product-werent-share-7498031436415983616-86bR","2026-08-25",585,31,"The requests that hurt our product weren't the ones we said no to."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_netlify-as-a-product-is-at-its-best-when-share-7488971741004820481-JGel","2026-07-31",559,11,"Netlify as a product is at its best when we simplify something really complex."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_as-a-kid-in-the-late-80s-i-experienced-crossing-share-7488247016909774848-yQMc","2026-07-29",451,11,"As a kid in the late '80s I experienced crossing the Berlin wall."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_after-12-years-of-building-netlify-and-raising-share-7482448764025245697-aQSC","2026-07-13",408,15,"After 12 years of building Netlify and raising over $212M, it's time to reintroduce myself."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_the-most-honest-bug-report-netlify-got-last-share-7487869507412140033-1PpZ","2026-07-28",369,7,"The most honest bug report Netlify got last year came from Claude Code right after it launched."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_if-youre-an-investor-in-the-bay-youve-share-7488579179844616192-wxVD","2026-07-30",366,8,"If you're an investor in the Bay, you've watched a steady stream of $100B+ companies come and go."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_the-companies-pushing-hardest-for-in-office-share-7486072646502273024-sUUi","2026-07-23",358,2,"The companies pushing hardest for in-office work are the same ones betting everything on AI."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_three-roles-are-open-at-netlify-each-one-share-7480984116524527616-uPo6","2026-07-09",357,2,"Three roles are open at Netlify. Each one owns a number that decides how big we get."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_at-netlify-we-have-four-values-they-werent-share-7485695179522482176-GSIC","2026-07-22",321,1,"At Netlify we have four values. They weren't invented in a strategy offsite."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_we-just-came-out-of-the-best-quarter-netlify-share-7465431637372243970-XU0A","2026-05-27",312,1,"We just came out of the best quarter Netlify has ever had."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_an-hr-business-partner-at-netlify-with-zero-share-7486419973179961345-0FCJ","2026-07-24",294,4,"An HR business partner at Netlify with zero coding background just replaced Culture Amp."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_the-summer-yc-batch-is-halfway-through-and-share-7487522189601075201-Jo1N","2026-07-27",278,4,"The Summer YC batch is halfway through, and the Fall application deadline is today."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_last-week-netlify-crossed-16-million-users-share-7477375330807169025-hT9A","2026-06-29",165,3,"Last week Netlify crossed 16 million users. Three weeks ago, it was 15 million."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_we-thought-netlify-was-good-at-agent-experience-share-7475925786076643328-rQ_L","2026-06-25",161,null,"We thought Netlify was good at agent experience. Then we measured it, and some scores stung."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_when-we-pivoted-netlify-around-agent-experience-share-7480229148905476096-TNqo","2026-07-07",121,2,"When we pivoted Netlify around Agent Experience, the person who moved fastest was our CTO."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_in-2014-people-didnt-take-front-end-developers-share-7483535954323062784-C7-F","2026-07-16",112,2,"In 2014, people didn't take front-end developers seriously."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_when-steve-jobs-came-back-to-apple-the-company-share-7484985476257468416-Ctha","2026-07-20",112,1,"When Steve Jobs came back to Apple, the company was building printers, mice, Newton and a lot else."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_microsoft-made-a-call-this-year-that-most-share-7485332784291561472-Jpy6","2026-07-21",84,null,"Microsoft made a call this year that most enterprise AI vendors are still avoiding."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_today-our-episode-of-codetvs-greenfield-share-7478485668655050752-vjXi","2026-07-02",73,null,"Today our episode of CodeTV's Greenfield Games goes live!"],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_theres-a-shift-happening-in-the-us-that-share-7483173537927688195-xqmh","2026-07-15",61,null,"There's a shift happening in the US that should matter to every builder working with AI."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_the-best-website-weve-ever-built-isnt-for-share-7452755912269647874-o0hA","2026-04-22",57,null,"The best website we've ever built isn't for humans."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_us-vcs-invested-355b-last-year-all-of-europe-share-7483853019290255363-xSMe","2026-07-17",55,2,"US VCs invested $355B last year. All of Europe: $77B."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_my-bot-got-banned-for-being-a-bot-what-google-share-7482796322085896193-OfRt","2026-07-14",54,4,"My bot got banned for being a bot. What Google did next is the most encouraging thing I've seen."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_i-learned-to-program-because-my-handwriting-share-7481361600449437697-X8t-","2026-07-10",50,null,"I learned to program because my handwriting was unreadable."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_were-replacing-our-customer-success-platform-share-7470474911589982208-K1DX","2026-06-10",40,null,"We're replacing our customer success platform with tools we built ourselves."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_reading-alice-in-wonderland-to-my-daughter-share-7478824894537908224-Wm2A","2026-07-03",37,null,"Reading Alice in Wonderland to my daughter before she sleeps is the best thing in most of my days."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_a-qualtrics-rep-called-to-congratulate-us-share-7473026689632092161-JkXS","2026-06-17",34,1,"A Qualtrics rep called to congratulate us on our growth. We used the call to cancel."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_our-cfo-is-one-of-the-top-three-users-of-share-7473766583815987202-9WJB","2026-06-19",33,null,"Our CFO is one of the top three users of our agent runner product."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_i-was-offered-to-be-acquired-by-firebase-share-7462532536204886016-UYNC","2026-05-19",33,null,"I was offered to be acquired by Firebase in 2014."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_one-of-our-csms-sarah-mandel-built-a-whole-share-7477737731750707200-kZqX","2026-06-30",30,null,"One of our CSMs built a whole onboarding app for our customers, unprompted, in a couple of hours."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_renewal-rates-went-up-17-points-after-our-share-7472664303901384707-sJSw","2026-06-16",29,null,"Renewal rates went up 17 points after our Customer Success team started building their own tools."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_disclaimer-i-coined-the-term-agent-experience-share-7478100108899749888-25J2","2026-07-01",29,null,"DISCLAIMER: I coined the term agent experience. Take everything below with a grain of salt."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_in-2013-my-best-friend-chris-called-me-from-share-7461082980321509376-8ltL","2026-05-15",26,null,"In 2013, my best friend Chris called me from Denmark. He'd just been diagnosed with lymphoma."],
+    ["https://www.linkedin.com/posts/mathias-biilmann-christensen-a5a3805_your-coding-agent-cant-read-your-filename-share-7479923125485375489-UvpN","2026-07-06",25,1,"Your coding agent can't read your filename conventions."],
+  ]
+};
+
+const RTL_AUG = {
+  key: "aug-2026",
+  label: "August 2026",
+  src: "LinkedIn \u2014 Richard Terry-Lloyd",
+  start: "2026-08-01",
+  end: "2026-08-31",
+  totFollowers: 13340,
+  impr: [1,6,4,2902,1847,326,338,175,114,142,683,707,1701,1521,740,422,634,1166,2897,10073,3966,3085,1887,2388,1770,1089,1249,2223,646,508,300],
+  eng: [0,0,0,143,69,8,13,4,1,9,38,20,34,11,6,4,6,13,57,78,59,10,10,15,32,50,79,88,31,6,3],
+  fNew: [2,7,1,2,11,2,2,0,3,8,2,3,4,2,3,1,1,6,3,22,11,1,1,5,10,12,3,5,2,3,0],
+  totals: {"impressions": 45510, "members": 23787, "inNetworkPct": 33, "outNetworkPct": 67, "socialEng": 897, "reactions": 824, "comments": 47, "reposts": 2, "saves": 15, "sends": 9, "linkEng": 0, "newFollowers": 138},
+  prior: {"imprPct": 6292, "followersPct": 1, "note": "vs. prior 31 days, per LinkedIn"},
+  discovery: {"members": 23787, "inNetwork": "33%", "outOfNetwork": "67%"},
+  breakdown: {"social": {"total": 897, "items": [{"label": "Reactions", "value": 824}, {"label": "Comments", "value": 47}, {"label": "Reposts", "value": 2}, {"label": "Saves", "value": 15}, {"label": "Sends on LinkedIn", "value": 9}]}, "link": null},
+  demo: {
+    "Company": [["Salesforce","1%"],["Zuora","< 1%"],["Netlify","< 1%"],["Narvar","< 1%"],["Google","< 1%"],["AppZen","< 1%"],["Amazon Web Services (AWS)","< 1%"],["Sitecore","< 1%"],["IBM","< 1%"]],
+    "Location": [["San Francisco Bay Area","24%"],["New York City Metropolitan Area","8%"],["Los Angeles Metropolitan Area","4%"],["Greater Boston","4%"],["London Area, United Kingdom","3%"],["Greater Seattle Area","2%"],["Austin, Texas Metropolitan Area","2%"],["Denver Metropolitan Area","2%"],["Atlanta Metropolitan Area","2%"]],
+    "Company size": [["10,001+ employees","15%"],["11-50 employees","13%"],["2-10 employees","13%"],["51-200 employees","13%"],["1,001-5,000 employees","12%"],["201-500 employees","9%"],["501-1,000 employees","7%"],["5,001-10,000 employees","4%"],["0-1 employees","2%"]],
+    "Seniority": [["Senior","27%"],["Director","15%"],["CXO","15%"],["VP","12%"],["Partner","7%"],["Entry","7%"],["Owner","5%"],["Manager","4%"]],
+    "Job title": [["Founder","5%"],["Chief Executive Officer","4%"],["Co-Founder","4%"],["Board Member","2%"],["Account Executive","2%"],["Enterprise Account Executive","2%"],["Vice President of Sales","2%"],["Managing Director","1%"],["President","1%"]],
+    "Industry": [["Software Development","25%"],["Technology, Information and Internet","15%"],["IT Services and IT Consulting","15%"],["Business Consulting and Services","4%"],["Retail","4%"],["Financial Services","3%"],["Staffing and Recruiting","2%"],["Venture Capital and Private Equity Principals","2%"],["Advertising Services","2%"],["Retail Apparel and Fashion","1%"]],
+  },
+  contentDemo: {
+    "Company": [["Salesforce","4%"],["Zendesk","2%"],["HubSpot","1%"],["NetSuite","< 1%"],["ServiceNow","< 1%"],["AppZen","< 1%"],["Datadog","< 1%"],["Zuora","< 1%"],["Docusign","< 1%"]],
+    "Location": [["San Francisco Bay Area","13%"],["New York City Metropolitan Area","6%"],["London Area, United Kingdom","5%"],["Greater Boston","5%"],["Greater Dublin","3%"],["Greater Chicago Area","3%"],["Austin, Texas Metropolitan Area","3%"],["Denver Metropolitan Area","2%"],["Los Angeles Metropolitan Area","2%"]],
+    "Company size": [["1,001-5,000 employees","18%"],["51-200 employees","14%"],["10,001+ employees","14%"],["201-500 employees","11%"],["5,001-10,000 employees","9%"],["11-50 employees","9%"],["501-1,000 employees","9%"],["2-10 employees","7%"]],
+    "Seniority": [["Senior","39%"],["Director","15%"],["Entry","12%"],["Manager","9%"],["VP","8%"],["CXO","6%"],["Owner","3%"],["Partner","2%"],["Training","< 1%"]],
+    "Job title": [["Account Executive","7%"],["Enterprise Account Executive","4%"],["Customer Success Manager","3%"],["Founder","2%"],["Software Engineer","2%"],["Co-Founder","2%"],["Account Manager","2%"],["Sales Director","1%"],["Chief Executive Officer","1%"]],
+    "Industry": [["Software Development","30%"],["IT Services and IT Consulting","20%"],["Technology, Information and Internet","16%"],["Financial Services","3%"],["Computer and Network Security","2%"],["Business Consulting and Services","2%"],["Advertising Services","2%"],["Technology, Information and Media","1%"],["Marketing Services","1%"],["Retail","< 1%"]],
+  },
+  posts: [
+    ["https://www.linkedin.com/posts/richardterrylloyd_we-stopped-paying-for-zendesk-and-built-the-share-7495872217189089280-WuQ_","2026-08-19",22854,166,"We stopped paying for Zendesk and built the replacement ourselves, on our own platform."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_last-week-at-our-summer-summit-buildathon-share-7490436403085058050-ett3","2026-08-04",6435,270,"Last week at our Summer Summit Buildathon, the entire company came together to build on Netlify Agent Runners."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_a-ciso-called-me-last-week-and-said-three-share-7493697891174322178-By3r","2026-08-13",5609,32,"A CISO called me last week and said three words: get everything down."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_18-months-ago-the-people-building-applications-share-7498771351269191680-AQzH","2026-08-27",3854,169,"18 months ago, the people building applications and websites typically had deep expertise in governance, connections and deployments."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_we-used-to-charge-a-cover-at-the-door-getting-share-7498046541958406144-ZyfZ","2026-08-25",1481,49,"We used to charge a cover at the door. Getting rid of it was one of the bigger risks we've taken."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_the-build-versus-buy-objection-gets-a-lot-share-7492973141028196352-vUzj","2026-08-11",970,46,"The build-versus-buy objection gets a lot clearer when a company asks whether building deployment infrastructure is its core business."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_the-netlify-skill-is-the-most-underused-thing-ugcPost-7496597128023224320-rETz","2026-08-21",954,52,"The Netlify Skill is the most underused thing we have."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_i-was-talking-with-the-guy-rebuilding-our-share-7496234620896686080-Y_es","2026-08-20",924,46,"I was talking with the guy rebuilding our revenue operations from the ground up."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_we-replaced-the-manual-work-a-year-ago-share-7493335500544675840-lVQz","2026-08-12",846,22,"We replaced the manual work."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_a-customer-of-ours-just-found-16-teams-in-share-7495509857362554883-t_R2","2026-08-18",695,11,"A customer of ours just found 16 teams shipping production apps outside their domain."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_every-customer-i-talk-to-had-zero-ai-budget-share-7498408930608336896-M9cx","2026-08-26",579,28,"Every customer I talk to had zero AI budget in January; now there is a real line item."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_gal-bechor-ollie-dotsch-and-travis-enos-ugcPost-7483964529022873600-OMQZ","2026-07-17",54,2,"Gal Bechor, Ollie Dotsch and Travis Enos \u2014 thank you."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_great-blog-by-sean-roberts-httpslnkdin-share-7482620856804827136--8P1","2026-07-13",24,3,"Great blog by Sean Roberts."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_thank-you-mathias-biilmann-christensen-and-share-7466299487884582912-8iFr","2026-05-29",7,null,"Thank you Mathias Biilmann Christensen and team."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_compose24-share-7247677522144886784-zyWx","2024-10-03",4,null,"Compose24."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_netlify-developerexperience-jamstack-share-7324901347839922178-KkEw","2025-05-04",3,null,"Netlify, developer experience, Jamstack."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_huge-day-share-7440180574016741376-WKXz","2026-03-18",2,null,"Huge day."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_ax-share-7422823936616488960-_PeD","2026-01-29",2,null,"AX."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_ax-share-7415213783830413313-fysO","2026-01-08",2,null,"AX."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_netlify-mcp-ax-share-7325935295986618369-dUTr","2025-05-07",1,null,"Netlify MCP and AX."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_5-ways-to-maximize-your-customer-experience-share-6955229364749840384-kgJl","2022-07-19",1,null,"5 ways to maximize your customer experience."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_thank-you-rohan-chandra-for-working-through-share-7470711864059158528-u_1l","2026-06-10",1,null,"Thank you Rohan Chandra for working through it with us."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_rustin-banks-thank-you-for-the-partnership-ugcPost-7462921222906085376-SIHB","2026-05-20",1,null,"Rustin Banks \u2014 thank you for the partnership."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_share-7438084503539154944-apO9","2026-03-12",1,null],
+    ["https://www.linkedin.com/posts/richardterrylloyd_joyconf-share-7383506841277775872-STJr","2025-10-13",1,null,"JoyConf."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_frontend-frameworks-a-2024-year-in-review-share-7286168069628993536-Fq1c","2025-01-17",1,null,"Frontend frameworks: a 2024 year in review."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_share-7309024517333426176-F-TW","2025-03-21",1,null],
+    ["https://www.linkedin.com/posts/richardterrylloyd_ai-share-7257517906698149888-vGnT","2024-10-30",1,null,"AI."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_aeo-geo-seo-visibility-is-evolving-fast-share-7461225019772313600-_3fo","2026-05-15",1,null,"AEO, GEO, SEO: visibility is evolving fast."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_machx-share-7454885489091821569-ymiX","2026-04-28",1,null,"MACH X."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_nrf2024-ugcPost-7153517697295679490-e0-N","2024-01-17",1,null,"NRF 2024."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_share-7307992328391012354-uCLA","2025-03-18",1,null],
+    ["https://www.linkedin.com/posts/richardterrylloyd_ecommerce-share-7467252760070164481-ZDZg","2026-06-01",1,null,"Ecommerce."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_agent-runners-where-ai-development-meets-share-7379201214866980864-llFG","2025-10-01",1,null,"Agent Runners: where AI development meets production."],
+    ["https://www.linkedin.com/posts/richardterrylloyd_share-7295121478872641536-aSar","2025-02-11",1,null],
+    ["https://www.linkedin.com/posts/richardterrylloyd_share-7293823171206516738-JudI","2025-02-07",1,null],
+  ]
+};
+
+// ── ICP ENGAGEMENT REPORTS ────────────────────────────────────────
+// From each person's periodic Lineage ICP Engagement Report (PDF).
+// One current report per person; replace in place when a new one lands.
+const ICP_MATHIAS = {
+  subject: 'Mathias Biilmann Christensen · Netlify',
+  posts: 97, periodStart: '2026-04-14', periodEnd: '2026-08-28', prepared: '2026-08-29',
+  summary: {
+    text: 'Across 97 posts from 2026-04-14 to 2026-08-28, 2,462 unique people engaged. After excluding 24 Netlify employees, 1,272 engagers (52%) match at least one ICP persona.',
+    metrics: [
+      { label:'Total engagers',         count:2462, share:'100%' },
+      { label:'Netlify staff excluded', count:24,   share:'1%'   },
+      { label:'ICP engagers',           count:1272, share:'52%'  },
+      { label:'No ICP match',           count:1166, share:'47%'  }
+    ]
+  },
+  personas: [
+    { name:'CMO / Business Leader', engagers:596, pct:'47%' },
+    { name:'Developer',             engagers:412, pct:'32%' },
+    { name:'Builder',               engagers:150, pct:'12%' },
+    { name:'Tech Leader',           engagers:114, pct:'9%'  }
+  ],
+  topEngagers: [
+    { name:'Michael Carter',        role:'just a nerdy guy having fun',            company:'Boardy',                  persona:'CMO/Biz',    eng:64, posts:46 },
+    { name:'Phanindra Reddy',       role:'The Voice AI Guy | AI Voice agents',     company:'Every-ai.com',            persona:'Tech Leader',eng:42, posts:33 },
+    { name:'Jan Pilgaard Carlsen',  role:'Helping arts organizations retain…',     company:'Culttech Accelerator',    persona:'CMO/Biz',    eng:41, posts:41 },
+    { name:'Christian (Chris) Bach',role:'Founder, investor, board member',        company:'Stealth',                 persona:'CMO/Biz',    eng:40, posts:40 },
+    { name:'Boris de Wit',          role:'Making software, AI alignment',          company:'Starboat',                persona:'CMO/Biz',    eng:37, posts:33 },
+    { name:'Barry D’Arcy',          role:'VP of Partners @Storyblok',              company:'Partnership Leaders',     persona:'Builder',    eng:27, posts:26 },
+    { name:'Brian Gentile',         role:'10X CEO Coach & Chairman of the Board',  company:'—',                       persona:'CMO/Biz',    eng:26, posts:26 },
+    { name:'Mitchell Seaton',       role:'Full Stack Developer',                   company:'NRMA Parks and Resorts',  persona:'Developer',  eng:25, posts:25 },
+    { name:'Rasmus Leth Skjoldan',  role:'AI marketer and CMO',                    company:'Hello Retail',            persona:'CMO/Biz',    eng:24, posts:23 },
+    { name:'Avishay Cohen',         role:'Co-founder & CEO | AI Design Agent',     company:'Anima App (YC S18)',      persona:'CMO/Biz',    eng:24, posts:24 },
+    { name:'Dan Barak',             role:'Building something new…',                company:'—',                       persona:'Builder',    eng:24, posts:22 },
+    { name:'Dr Claire Knight',      role:'CTO/VP of Engineering, Advisor, Mentor', company:'Sailhouse',               persona:'Tech Leader',eng:22, posts:21 },
+    { name:'Clarence A.',           role:'Software Engineer - Developer Support',  company:'—',                       persona:'Developer',  eng:19, posts:19 },
+    { name:'Chad Solomonson',       role:'MarTech + AI Strategist & Advisor',      company:'Boye & Company',          persona:'CMO/Biz',    eng:19, posts:17 },
+    { name:'Wade Warren',           role:'CTO/SVP - Engineering, Advisor',         company:'—',                       persona:'Tech Leader',eng:18, posts:18 },
+    { name:'Bhupesh P.',            role:'Founder | Fast MVPs & Production',       company:'Thedevswelly',            persona:'CMO/Biz',    eng:18, posts:17 },
+    { name:'Samuel Snopko',         role:'Head of Product @Storyblok',             company:'Storyblok',               persona:'Developer',  eng:18, posts:18 },
+    { name:'Ameer Badri',           role:'Solutions Engineering Leader',           company:'PredictiveTrends',        persona:'Tech Leader',eng:18, posts:18 },
+    { name:'Jon Barrett',           role:'Production-Grade, Agentic AI Engineer',  company:'—',                       persona:'Builder',    eng:18, posts:18 },
+    { name:'Simon Clemmensen',      role:'Higher Education Copywriter & Advisor',  company:'Simon Says Consulting',   persona:'CMO/Biz',    eng:18, posts:18 },
+    { name:'Matteo Frana',          role:'Founder and CEO/CTO',                    company:'React Bricks',            persona:'Developer',  eng:16, posts:16 },
+    { name:'Thomas Daly',           role:'Product Leader | Launching 0-1',         company:'Replay.io',               persona:'CMO/Biz',    eng:16, posts:15 },
+    { name:'Duncan Schouten',       role:'AI @ Pantheon | Director of Product',    company:'Pantheon',                persona:'Developer',  eng:15, posts:15 },
+    { name:'Bryan May',             role:'Solutions Architect',                    company:'Amazon Web Services',     persona:'Builder',    eng:14, posts:14 },
+    { name:'Dan Malca',             role:'Head of Engineering, Yahoo! Homepage',   company:'Yahoo',                   persona:'Tech Leader',eng:14, posts:14 }
+  ],
+  topics: [
+    { name:'Company building & GTM',            posts:6,  totalEng:387,  icpEng:226, icpRate:'58%' },
+    { name:'Product launches',                  posts:7,  totalEng:280,  icpEng:162, icpRate:'58%' },
+    { name:'Agent experience',                  posts:19, totalEng:1159, icpEng:666, icpRate:'57%' },
+    { name:'Pricing & business model',          posts:11, totalEng:610,  icpEng:350, icpRate:'57%' },
+    { name:'Other',                             posts:6,  totalEng:426,  icpEng:239, icpRate:'56%' },
+    { name:'AI & product',                      posts:30, totalEng:1768, icpEng:957, icpRate:'54%' },
+    { name:'Enterprise & composable',           posts:2,  totalEng:126,  icpEng:68,  icpRate:'54%' },
+    { name:'Non-dev builders',                  posts:9,  totalEng:349,  icpEng:183, icpRate:'52%' },
+    { name:'Internal tools & SaaS replacement', posts:3,  totalEng:143,  icpEng:74,  icpRate:'52%' },
+    { name:'AI & industry commentary',          posts:2,  totalEng:55,   icpEng:26,  icpRate:'47%' },
+    { name:'Community & events',                posts:2,  totalEng:44,   icpEng:16,  icpRate:'36%' }
+  ],
+  contentInsights: [
+    '‘Company building & GTM’ posts drive the highest ICP engagement rate at 58% (226 ICP engagers across 6 posts), vs ‘Community & events’ at 36%.',
+    'Top 10 ICP engagers account for 11% of all ICP engagement (350 of 3,054 interactions), indicating a concentrated core audience worth nurturing directly.',
+    'CMO/business leader is the largest ICP segment at 596 engagers (47% of ICP). Developer: 412, Builder: 150, Technical leader: 114.',
+    'Geography (where known): 141 US-based (71%), 58 EU-based (29%), 1,073 unknown location.',
+    '31 posts achieved a 60%+ ICP engagement rate with 10+ total engagers. ‘Agent experience’ was the most common topic among these high performers (9 of 31).',
+    'Original posts drive a 56% ICP engagement rate vs 52% for reposts/quotes, across 80 original and 17 repost/quote posts.'
+  ]
+};
+
+const ICP_RTL = {
+  subject: 'Richard Terry-Lloyd · Netlify',
+  posts: 11, periodStart: '2026-08-04', periodEnd: '2026-08-27', prepared: '2026-08-27',
+  summary: {
+    text: 'Richard Terry-Lloyd published 11 posts between 2026-08-04 and 2026-08-27, generating 264 unique engagers. Of those, 65 matched one or more ICP personas (25% ICP engagement rate). 3 Netlify employees were excluded from the ICP pool.',
+    metrics: [
+      { label:'Total engagers',         count:264, share:'100%' },
+      { label:'Netlify staff excluded', count:3,   share:'1%'   },
+      { label:'ICP engagers',           count:65,  share:'25%'  },
+      { label:'No ICP match',           count:196, share:'74%'  }
+    ]
+  },
+  personas: [
+    { name:'CRO / GTM leader',      engagers:39, pct:'60%' },
+    { name:'Solution Architect',    engagers:11, pct:'17%' },
+    { name:'VP Partnerships',       engagers:10, pct:'15%' },
+    { name:'VP Customer Success',   engagers:4,  pct:'6%'  },
+    { name:'CISO / Security leader',engagers:1,  pct:'2%'  }
+  ],
+  topEngagers: [
+    { name:'Barry D’Arcy',         role:'VP of Partners @Storyblok',        company:'Storyblok',         persona:'VP Partnerships',   eng:7, posts:7 },
+    { name:'Conrad McDougall',     role:'Senior Partnerships Leader',       company:'Shopify',           persona:'VP Partnerships',   eng:5, posts:5 },
+    { name:'Brenda Lando Fridman', role:'—',                                company:'HubSpot',           persona:'CRO/GTM leader',    eng:3, posts:3 },
+    { name:'Doug Aspland',         role:'—',                                company:'—',                 persona:'CRO/GTM leader',    eng:3, posts:3 },
+    { name:'George Anthony',       role:'—',                                company:'—',                 persona:'CRO/GTM leader',    eng:3, posts:3 },
+    { name:'Michael Kepnes',       role:'—',                                company:'—',                 persona:'CRO/GTM leader',    eng:3, posts:3 },
+    { name:'Tony Verrill',         role:'—',                                company:'—',                 persona:'CRO/GTM leader',    eng:3, posts:3 },
+    { name:'Brendan Walsh',        role:'—',                                company:'Gradyent',          persona:'CRO/GTM leader',    eng:3, posts:2 },
+    { name:'Allison Loy',          role:'—',                                company:'OneTrust',          persona:'CRO/GTM leader',    eng:2, posts:2 },
+    { name:'Anish Patel',          role:'—',                                company:'—',                 persona:'CRO/GTM leader',    eng:2, posts:2 },
+    { name:'Brendan Hickey',       role:'—',                                company:'—',                 persona:'CRO/GTM leader',    eng:2, posts:2 },
+    { name:'Chi Park',             role:'—',                                company:'—',                 persona:'Solution Architect',eng:2, posts:2 },
+    { name:'Daniel Baum',          role:'—',                                company:'Pioneer Fund',      persona:'CRO/GTM leader',    eng:2, posts:2 },
+    { name:'Jack Friel',           role:'—',                                company:'—',                 persona:'CRO/GTM leader',    eng:2, posts:2 },
+    { name:'Justin List',          role:'—',                                company:'—',                 persona:'CRO/GTM leader',    eng:2, posts:2 },
+    { name:'Roland Drewell',       role:'—',                                company:'—',                 persona:'Solution Architect',eng:2, posts:2 },
+    { name:'Steve Yeager',         role:'—',                                company:'—',                 persona:'CRO/GTM leader',    eng:2, posts:2 },
+    { name:'Tom Rice',             role:'—',                                company:'—',                 persona:'CRO/GTM leader',    eng:2, posts:2 },
+    { name:'Yatharth Lahar',       role:'—',                                company:'—',                 persona:'VP Customer Success',eng:2,posts:1 },
+    { name:'Alex Hwang',           role:'—',                                company:'Clipboard Health',  persona:'CRO/GTM leader',    eng:1, posts:1 },
+    { name:'Andy Scollan',         role:'—',                                company:'Jasper',            persona:'CRO/GTM leader',    eng:1, posts:1 }
+  ],
+  postAnalysis: [
+    { date:'2026-08-04', topic:'Buildathon: building on own platform as exec',   totalEng:233, icpEng:25, icpRate:'11%' },
+    { date:'2026-08-11', topic:'Build vs buy: deployment infrastructure',        totalEng:31,  icpEng:13, icpRate:'42%' },
+    { date:'2026-08-12', topic:'GTM agents: research and 360-degree view',       totalEng:14,  icpEng:3,  icpRate:'21%' },
+    { date:'2026-08-13', topic:'CISO story: rogue site, domain capture',         totalEng:18,  icpEng:8,  icpRate:'44%' },
+    { date:'2026-08-18', topic:'Shadow IT: 16 rogue teams, agent-authored PRs',  totalEng:6,   icpEng:1,  icpRate:'17%' },
+    { date:'2026-08-19', topic:'Building on own platform: replacing Zendesk',    totalEng:97,  icpEng:18, icpRate:'19%' },
+    { date:'2026-08-20', topic:'Account selection: behavior over firmographics', totalEng:15,  icpEng:3,  icpRate:'20%' },
+    { date:'2026-08-21', topic:'Netlify Skill: Claude agent integration',        totalEng:17,  icpEng:3,  icpRate:'18%' },
+    { date:'2026-08-25', topic:'Pricing: seats to credits, PLG shift',           totalEng:21,  icpEng:10, icpRate:'48%' },
+    { date:'2026-08-26', topic:'AI maturity: build/govern/run stages',           totalEng:7,   icpEng:1,  icpRate:'14%' },
+    { date:'2026-08-27', topic:'AI democratized building: governance gap',       totalEng:26,  icpEng:11, icpRate:'42%' }
+  ],
+  contentInsights: [
+    'The Buildathon post (Aug 4) drove 233 total engagements and 25 ICP engagers (11% ICP rate) — the highest-engagement post by 2.4x. The personal ‘I got stuck building’ angle reached broadly but attracted the lowest ICP density of all posts.',
+    'Security-themed posts (CISO story, shadow IT, governance, AI maturity) averaged 14 total engagements at a 29% ICP rate. The CISO ‘get everything down’ post pulled 44% and the governance post 42% — security content punches above its weight on ICP density.',
+    'GTM/RevOps posts (account selection, pricing shift, GTM agents) averaged 17 engagements at a 30% ICP rate. The pricing post (seats to credits) had the highest ICP rate of all posts at 48%, pulling CRO and VP Sales personas as intended.',
+    'Product/builder posts (Buildathon, Netlify Skill, NetliDesk, build-vs-buy) averaged 94 engagements but only a 22% ICP rate — high reach, lower ICP density, attracting a broader developer audience beyond the buyer personas.',
+    'CRO/GTM dominates at 39 of 65 ICP matches, aligning with the rev-ops and sales topic focus.',
+    'High-engagement posts (50+ total) averaged a 15% ICP rate vs 30% for lower-engagement posts — the viral Buildathon post inflates the high bucket.',
+    'Only 4 ICP matches left comments rather than reactions alone. The NetliDesk post (Aug 19) drew the most substantive ICP comments, including a VP CS asking ‘Who runs it? Who is on-call?’.'
+  ]
+};
+
+// ── PEOPLE ────────────────────────────────────────────────────────
+// `reports` newest first. `icpFile` is a CSV committed under /data,
+// rendered on the ICPs tab and downloadable from there.
+const PEOPLE = {
+  mathias: {
+    key:'mathias', tab:'Mathias', name:'Mathias Biilmann Christensen', short:'Mathias',
+    role:'Co-founder & CEO, Netlify',
+    profile:'https://www.linkedin.com/in/mathias-biilmann-christensen-a5a3805/',
+    reports:[MATHIAS_AUG, MATHIAS_APR_JUL], icp:ICP_MATHIAS,
+    icpFile:{ path:'data/icp-mathias-2026-08.csv', label:'Mathias — ICP engagers', period:'Apr 14 – Aug 28, 2026' }
+  },
+  rtl: {
+    key:'rtl', tab:'RTL', name:'Richard Terry-Lloyd', short:'Richard',
+    role:'Chief Revenue Officer, Netlify',
+    profile:'https://www.linkedin.com/in/richardterrylloyd/',
+    reports:[RTL_AUG], icp:ICP_RTL,
+    icpFile:{ path:'data/icp-rtl-2026-08.csv', label:'RTL — ICP engagers', period:'Aug 4 – Aug 27, 2026' }
+  }
+};
+const PERSON_KEYS = ['mathias','rtl'];
+
+// ── STATE ─────────────────────────────────────────────────────────
+let activeTab = 'mathias';
+const view = {};   // personKey -> { reportKey, window:'full'|'last7', demoCat, sort }
+PERSON_KEYS.forEach(k => {
+  view[k] = { reportKey: PEOPLE[k].reports[0].key, window:'full', demoCat:null,
+              sort:{ col:'impr', dir:'desc' } };
+});
 let charts = {};
 
 // ── AUTH ──────────────────────────────────────────────────────────
@@ -467,17 +691,7 @@ async function signInWithGoogle(){
   const { error } = await sb.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: window.location.origin + window.location.pathname } });
   if (error){ setAuthError(error.message); btn.disabled = false; }
 }
-async function signOut(){ await sb.auth.signOut(); LI=null; showAuthScreen(true); }
-
-// ── TABS ──────────────────────────────────────────────────────────
-function switchTab(e, name){
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  if (e&&e.target) e.target.classList.add('active');
-  if (name==='icps') loadIcps();
-  if (name==='overview') renderOverview();
-}
+async function signOut(){ await sb.auth.signOut(); showAuthScreen(true); }
 
 // ── FORMAT HELPERS ────────────────────────────────────────────────
 function fmt(n){ if(n==null||isNaN(n))return '—'; const a=Math.abs(n); if(a>=1e6)return (n/1e6).toFixed(a>=1e7?0:1)+'M'; if(a>=1e3)return (n/1e3).toFixed(a>=1e4?0:1)+'K'; return String(Math.round(n)); }
@@ -489,124 +703,209 @@ function fmtDate(iso){ if(!iso)return '—'; const t=Date.parse(iso+(iso.length<
 function fmtDateShort(iso){ const t=Date.parse(iso+'T00:00:00Z'); return new Date(t).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'}); }
 function esc(s){ return s==null?'':String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 function setStatus(msg, kind){ const el=document.getElementById('status-bar'); el.className=kind||''; el.innerHTML = kind==='loading' ? '<span class="spinner"></span>'+msg : msg; }
+const sum = a => (a||[]).reduce((x,y)=>x+(y||0),0);
 
-// ── LOAD DATA ─────────────────────────────────────────────────────
-async function loadData(){
-  const btn=document.getElementById('refresh-btn'); btn.disabled=true;
-  setStatus('Loading dashboard data…','loading');
-  try {
-    LI = (typeof LI_DATA !== 'undefined') ? LI_DATA : null;
-    if (!LI){ setStatus('No LinkedIn data loaded yet.','warn'); }
-    else { setStatus(''); document.getElementById('last-updated').textContent = 'Data through ' + fmtDate(LI.end); }
-    renderOverview(); renderPosts();
-    document.getElementById('footer-date').textContent = 'Netlify Content Performance Dashboard · Powered by Virio · LinkedIn data: ' + (LI? (fmtDate(LI.start)+' – '+fmtDate(LI.end)) : '—');
-  } catch(e){ setStatus('Failed to load: '+e.message,'error'); }
-  finally { btn.disabled=false; }
+// Post URLs come through as either a full URL (newer exports) or a slug
+// that hangs off the report's urlPrefix (the Apr-Jul export).
+function postUrl(rep, p){ return /^https?:\/\//.test(p[0]) ? p[0] : (rep.urlPrefix||'')+p[0]; }
+// Post tuples are [slugOrUrl, date, impressions, engagements, title?]. The
+// title is the post's own opening line, attached when the export was
+// processed; without one we fall back to un-slugging the URL.
+function postTitle(p){
+  if (p[4]) return p[4];
+  let s = String(p[0]).replace(/^https?:\/\/[^_]*_/,'').replace(/-(share|ugcPost|activity)-\d+-[\w-]+$/,'').replace(/-+/g,' ').trim();
+  try { s = decodeURIComponent(s); } catch(_){}
+  if (!s) return 'Untitled post';
+  return s.charAt(0).toUpperCase()+s.slice(1) + '…';
+}
+function report(personKey){
+  const p = PEOPLE[personKey];
+  return p.reports.find(r => r.key === view[personKey].reportKey) || p.reports[0];
+}
+// Posts published inside the report window (LinkedIn's top-posts list also
+// carries older posts that picked up impressions during the period).
+function postsInPeriod(rep){
+  return (rep.posts||[]).filter(p => p[1] >= rep.start && p[1] <= rep.end);
 }
 
-// ── PERIOD ────────────────────────────────────────────────────────
-function setPeriod(p){
-  liPeriod=p;
-  document.getElementById('seg-last7').classList.toggle('active', p==='last7');
-  document.getElementById('seg-overall').classList.toggle('active', p==='overall');
-  renderOverview();
+// ── TABS ──────────────────────────────────────────────────────────
+const TABS = [
+  { id:'mathias',       label:'Mathias · Overview' },
+  { id:'mathias-posts', label:'Mathias · By Post'  },
+  { id:'rtl',           label:'RTL · Overview'     },
+  { id:'rtl-posts',     label:'RTL · By Post'      },
+  { id:'leaderboard',   label:'Leaderboard'        },
+  { id:'icps',          label:'ICPs'               }
+];
+function renderTabNav(){
+  document.getElementById('tab-nav').innerHTML = TABS.map(t =>
+    `<button class="tab-btn ${t.id===activeTab?'active':''}" onclick="switchTab('${t.id}')">${esc(t.label)}</button>`).join('');
 }
-function periodSlice(arr){ return liPeriod==='last7' ? arr.slice(-7) : arr; }
-function periodStartIndex(len){ return liPeriod==='last7' ? Math.max(0,len-7) : 0; }
+function switchTab(id){
+  activeTab = id;
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  const el = document.getElementById('tab-'+id); if (el) el.classList.add('active');
+  renderTabNav();
+  if (id==='icps') loadIcps();
+  else if (id==='leaderboard') renderLeaderboard();
+  else if (id.endsWith('-posts')) renderPosts(id.replace('-posts',''));
+  else renderOverview(id);
+}
 
-// ── TAB 1: OVERVIEW ───────────────────────────────────────────────
-function renderOverview(){
-  renderIcpReport();
-  if (!LI){ document.getElementById('overview-metrics').innerHTML=''; return; }
-  const sIdx = periodStartIndex(LI.fNew.length);
-  const fNew = periodSlice(LI.fNew), impr = periodSlice(LI.impr), eng = periodSlice(LI.eng);
-  const sum = a=>a.reduce((x,y)=>x+(y||0),0);
-  const pImpr=sum(impr), pEng=sum(eng), pNewF=sum(fNew);
+// ── OVERVIEW (one per person) ─────────────────────────────────────
+function setReport(personKey, key){ view[personKey].reportKey = key; view[personKey].demoCat = null; renderOverview(personKey); }
+function setWindow(personKey, w){ view[personKey].window = w; renderOverview(personKey); }
+function setDemoCat(personKey, c){ view[personKey].demoCat = c; renderOverview(personKey); }
+
+function renderOverview(personKey){
+  const person = PEOPLE[personKey], v = view[personKey], rep = report(personKey);
+  const host = document.getElementById('tab-'+personKey);
+  const last7 = v.window === 'last7';
+  const sIdx = last7 ? Math.max(0, rep.fNew.length-7) : 0;
+  const slice = a => last7 ? (a||[]).slice(-7) : (a||[]);
+  const impr = slice(rep.impr), eng = slice(rep.eng), fNew = slice(rep.fNew);
+  const pImpr = sum(impr), pEng = sum(eng), pNewF = sum(fNew);
   const rate = pImpr ? (pEng/pImpr*100) : null;
-  const growthPct = (LI.totFollowers-pNewF)>0 ? (pNewF/(LI.totFollowers-pNewF)*100) : null;
-  const startDate = addDays(LI.start, sIdx);
-  document.getElementById('range-label').textContent = (liPeriod==='last7'?'Last 7 days · ':'Since start · ') + fmtDateShort(startDate) + ' – ' + fmtDate(LI.end);
+  const growthPct = (rep.totFollowers-pNewF) > 0 ? (pNewF/(rep.totFollowers-pNewF)*100) : null;
+  const startDate = addDays(rep.start, sIdx);
+  const nPosts = postsInPeriod(rep).length;
 
-  const snap = (LI_SNAPSHOT && LI_SNAPSHOT[liPeriod==='last7'?'last7':'overall']) || {};
-  const membersVal = (snap.membersReached!=null) ? snap.membersReached : (LI.discovery&&LI.discovery.members);
-  const membersSub = (snap.membersReached!=null && liPeriod==='last7') ? 'unique, last 7 days' : (snap.membersReachedNote ? ('unique · '+snap.membersReachedNote) : 'unique, overall');
+  // Members reached and the engagement breakdown are period-level figures
+  // from LinkedIn's own cards, so they only apply to the full window.
+  const members = rep.discovery && rep.discovery.members;
+  const showPeriodOnly = !last7;
+
+  const periodSeg = person.reports.length > 1
+    ? `<div class="seg">${person.reports.map(r=>`<button class="${r.key===v.reportKey?'active':''}" onclick="setReport('${personKey}','${r.key}')">${esc(r.label)}</button>`).join('')}</div>` : '';
 
   const cards = [
-    { label:'Total Followers', value: fmtFull(LI.totFollowers), cls:'teal', sub: growthPct!=null ? `<span class="up">▲ ${pNewF.toLocaleString()}</span> in this period (${growthPct.toFixed(1)}% growth)` : '' },
+    { label:'Total Followers', value: fmtFull(rep.totFollowers), cls:'teal',
+      sub: growthPct!=null ? `<span class="up">▲ ${pNewF.toLocaleString()}</span> new in this period (${growthPct.toFixed(1)}% growth)` : '' },
     { label:'Impressions', value: fmt(pImpr), cls:'blue', sub: fmtFull(pImpr) },
     { label:'Engagements', value: fmt(pEng), cls:'ink', sub:'reactions + comments + reposts' },
     { label:'Engagement Rate', value: fmtPct(rate), cls:'coral', sub:'engagements ÷ impressions' },
-    { label:'Members Reached', value: (snap.membersReached!=null)?fmtFull(snap.membersReached):fmt(membersVal), cls:'ink', sub: membersSub }
+    { label:'Posts Published', value: showPeriodOnly ? fmtFull(nPosts) : '—', cls:'ink',
+      sub: showPeriodOnly ? 'in this period' : 'full period only' },
+    { label:'Members Reached', value: showPeriodOnly ? fmtFull(members) : '—', cls:'ink',
+      sub: showPeriodOnly ? 'unique members, full period' : 'full period only' }
   ];
-  document.getElementById('overview-metrics').innerHTML = cards.map(c=>`
-    <div class="mcard"><div class="mcard-label">${c.label}</div><div class="mcard-value ${c.cls}">${c.value}</div>${c.sub?`<div class="mcard-sub">${c.sub}</div>`:''}</div>`).join('');
 
-  // charts
-  const labels = (liPeriod==='last7'?fNew:LI.fNew).map((_,i)=>fmtDateShort(addDays(LI.start, sIdx+i)));
+  host.innerHTML = `
+    <div class="person-bar">
+      <span class="person-name">${esc(person.name)}</span>
+      <span class="person-role">${esc(person.role)} · <a href="${esc(person.profile)}" target="_blank" rel="noopener">LinkedIn profile</a></span>
+    </div>
+    <div class="toolbar">
+      ${periodSeg}
+      <div class="seg">
+        <button class="${last7?'':'active'}" onclick="setWindow('${personKey}','full')">Full period</button>
+        <button class="${last7?'active':''}" onclick="setWindow('${personKey}','last7')">Last 7 days</button>
+      </div>
+      <div class="range-label">${last7?'Last 7 days · ':''}${fmtDateShort(startDate)} – ${fmtDate(rep.end)}</div>
+    </div>
+    <div class="metric-grid">${cards.map(c=>`
+      <div class="mcard"><div class="mcard-label">${c.label}</div><div class="mcard-value ${c.cls}">${c.value}</div>${c.sub?`<div class="mcard-sub">${c.sub}</div>`:''}</div>`).join('')}</div>
+    <div class="chart-row">
+      <div class="chart-card">
+        <div class="chart-card-title">Follower Growth</div>
+        <div class="chart-card-sub">Cumulative new followers over the period</div>
+        <div class="chart-wrap"><canvas id="chart-followers-${personKey}"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-title">Impressions</div>
+        <div class="chart-card-sub">Cumulative impressions over the period</div>
+        <div class="chart-wrap"><canvas id="chart-impr-${personKey}"></canvas></div>
+      </div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-card">
+        <div class="chart-card-title">Engagements</div>
+        <div class="chart-card-sub">Cumulative engagements (reactions + comments + reposts)</div>
+        <div class="chart-wrap"><canvas id="chart-eng-${personKey}"></canvas></div>
+      </div>
+      <div class="demo-card">
+        <div class="demo-head">
+          <div class="demo-title">Top Demographics <span class="muted" style="font-weight:400">· followers</span></div>
+          <div class="demo-tabs" id="demo-tabs-${personKey}"></div>
+        </div>
+        <div id="demo-body-${personKey}"></div>
+      </div>
+    </div>
+    ${showPeriodOnly ? renderDiscovery(rep) : ''}
+    ${showPeriodOnly ? renderEngBreakdown(rep) : ''}
+    <div id="icp-report-${personKey}"></div>`;
+
+  const labels = fNew.map((_,i)=>fmtDateShort(addDays(rep.start, sIdx+i)));
   const cum = a=>{ let s=0; return a.map(v=>s+=(v||0)); };
-  drawLine('chart-followers', labels, cum(fNew), '#1D9E75');
-  drawLine('chart-impr', labels, cum(impr), '#378ADD');
-  drawLine('chart-eng', labels, cum(eng), '#D85A30');
+  drawLine('chart-followers-'+personKey, labels, cum(fNew), '#1D9E75');
+  drawLine('chart-impr-'+personKey,      labels, cum(impr), '#378ADD');
+  drawLine('chart-eng-'+personKey,       labels, cum(eng),  '#D85A30');
 
-  renderDemoTabs();
-  renderEngBreakdown(snap);
+  renderDemoTabs(personKey, rep);
+  renderIcpReport(personKey);
 }
-function renderEngBreakdown(snap){
-  const host=document.getElementById('eng-row'); if(!host) return;
-  const e = snap && snap.engagement;
-  if(!e){ host.innerHTML=''; return; }
-  const periodLbl = liPeriod==='last7' ? 'Last 7 days' : (snap.membersReachedNote || 'Overall');
+
+function renderDiscovery(rep){
+  const d = rep.discovery; if(!d) return '';
+  const net = (d.inNetwork!=null) ? `
+      <div class="demo-row"><div class="demo-row-top"><span class="demo-row-label">In-network (followers and connections)</span><span class="demo-row-pct">${esc(d.inNetwork)}</span></div><div class="demo-bar"><div class="demo-bar-fill" style="width:${pctNum(d.inNetwork)}%"></div></div></div>
+      <div class="demo-row"><div class="demo-row-top"><span class="demo-row-label">Out-of-network</span><span class="demo-row-pct">${esc(d.outOfNetwork)}</span></div><div class="demo-bar"><div class="demo-bar-fill" style="width:${pctNum(d.outOfNetwork)}%"></div></div></div>` : '';
+  return `<div class="demo-card">
+    <div class="demo-head"><div class="demo-title">Discovery <span class="muted" style="font-weight:400">· how the content was found</span></div></div>
+    <div class="brk-grid">
+      <div><div class="brk-total">${fmtFull(rep.totals?rep.totals.impressions:null)}<span>Impressions</span></div>${net}</div>
+      <div><div class="brk-total">${fmtFull(d.members)}<span>Members reached</span></div>
+        <div class="demo-row"><div class="demo-row-top"><span class="demo-row-label muted">Unique members who saw at least one post in the period.</span></div></div></div>
+    </div></div>`;
+}
+function renderEngBreakdown(rep){
+  const e = rep.breakdown; if(!e) return '';
   const rows = list => (list||[]).map(it=>`<div class="demo-row"><div class="demo-row-top"><span class="demo-row-label">${esc(it.label)}</span><span class="demo-row-pct">${fmtFull(it.value)}</span></div></div>`).join('');
   const block = (g,title) => g ? `<div><div class="brk-total">${fmtFull(g.total)}<span>${title}</span></div>${rows(g.items)}</div>` : '';
-  host.innerHTML = `<div class="demo-card">
-    <div class="demo-head"><div class="demo-title">Engagement Breakdown <span class="muted" style="font-weight:400">· ${periodLbl}</span></div></div>
+  return `<div class="demo-card">
+    <div class="demo-head"><div class="demo-title">Engagement Breakdown <span class="muted" style="font-weight:400">· ${esc(rep.label)}</span></div></div>
     <div class="brk-grid">${block(e.social,'Social engagements')}${block(e.link,'Link engagements')}</div>
   </div>`;
 }
 function drawLine(id, labels, data, color){
   if (charts[id]){ try{charts[id].destroy();}catch(_){} }
+  const cv = document.getElementById(id); if(!cv) return;
   Chart.defaults.font.family="'DM Sans',sans-serif"; Chart.defaults.color='#5C5A55';
-  charts[id]=new Chart(document.getElementById(id),{
+  charts[id]=new Chart(cv,{
     type:'line',
     data:{labels,datasets:[{data,borderColor:color,backgroundColor:color+'22',borderWidth:2,pointRadius:labels.length>20?0:2,fill:true,tension:0.3}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmtFull(c.parsed.y)}}},
       scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:8,font:{size:9}}},y:{grid:{color:'rgba(26,25,22,0.07)'},beginAtZero:true,ticks:{font:{size:10},callback:v=>fmt(v)}}}}
   });
 }
-function renderDemoTabs(){
-  if (!LI||!LI.demo) return;
-  const cats = Object.keys(LI.demo);
+function renderDemoTabs(personKey, rep){
+  const host = document.getElementById('demo-tabs-'+personKey); if(!host||!rep.demo) return;
+  const cats = Object.keys(rep.demo);
   const order = ['Job title','Seniority','Industry','Location','Company size','Company'];
   cats.sort((a,b)=>{ const ia=order.indexOf(a), ib=order.indexOf(b); return (ia<0?99:ia)-(ib<0?99:ib); });
-  if (!demoCat || !cats.includes(demoCat)) demoCat = cats[0];
-  document.getElementById('demo-tabs').innerHTML = cats.map(c=>`<button class="${c===demoCat?'active':''}" onclick="setDemoCat('${esc(c)}')">${esc(c)}</button>`).join('');
-  renderDemoBody();
-}
-function setDemoCat(c){ demoCat=c; renderDemoTabs(); }
-function renderDemoBody(){
-  const items = (LI.demo[demoCat]||[]);
+  let cat = view[personKey].demoCat;
+  if (!cat || !cats.includes(cat)) cat = view[personKey].demoCat = cats[0];
+  host.innerHTML = cats.map(c=>`<button class="${c===cat?'active':''}" onclick="setDemoCat('${personKey}','${esc(c)}')">${esc(c)}</button>`).join('');
+  const items = rep.demo[cat]||[];
   const max = Math.max(1, ...items.map(it=>pctNum(it[1])));
-  document.getElementById('demo-body').innerHTML = items.map(it=>{
+  document.getElementById('demo-body-'+personKey).innerHTML = items.map(it=>{
     const w = Math.max(2, pctNum(it[1])/max*100);
     return `<div class="demo-row"><div class="demo-row-top"><span class="demo-row-label">${esc(it[0])}</span><span class="demo-row-pct">${esc(it[1])}</span></div><div class="demo-bar"><div class="demo-bar-fill" style="width:${w}%"></div></div></div>`;
   }).join('') || '<div class="empty">No data</div>';
 }
 
 // ── ICP ENGAGEMENT REPORT ─────────────────────────────────────────
-function personaClass(code){ const c=(code||'').toLowerCase(); if(c.indexOf('dev')===0)return 'dev'; if(c.indexOf('biz')===0)return 'biz'; if(c.indexOf('infl')===0)return 'infl'; if(c.indexOf('build')===0)return 'build'; return 'dev'; }
-function renderIcpReport(){
-  const host=document.getElementById('icp-report'); if(!host) return;
-  const which = (liPeriod==='last7') ? 'last7' : 'overall';
-  const periodLabel = which==='last7' ? 'Last 7 days' : 'Overall';
-  const R = ICP_REPORT && ICP_REPORT[which];
-  if(!R){
-    host.innerHTML = `
-    <div class="section-divider">
-      <h2>ICP Engagement Report <span class="muted" style="font-weight:400;font-size:12px">· ${periodLabel}</span></h2>
-    </div>
-    <div class="empty">No ${which==='last7'?'last-7-day':'overall'} ICP report loaded yet. Provide the ${which==='last7'?'weekly':'latest'} report to populate this view.</div>`;
-    return;
-  }
+function personaClass(name){
+  const c=(name||'').toLowerCase();
+  if(/dev|engineer|architect/.test(c)) return 'dev';
+  if(/cmo|business|cro|gtm|sales|success/.test(c)) return 'biz';
+  if(/build/.test(c)) return 'build';
+  return 'infl';
+}
+function renderIcpReport(personKey){
+  const host=document.getElementById('icp-report-'+personKey); if(!host) return;
+  const R = PEOPLE[personKey].icp;
+  if(!R){ host.innerHTML = `<div class="section-divider"><h2>ICP Engagement Report</h2></div><div class="empty">No ICP report loaded yet.</div>`; return; }
 
   const sumCards = R.summary.metrics.map(m=>
     `<div class="mcard"><div class="mcard-label">${esc(m.label)}</div><div class="mcard-value ink">${fmtFull(m.count)}</div><div class="mcard-sub">${esc(m.share)} of engagers</div></div>`).join('');
@@ -614,69 +913,210 @@ function renderIcpReport(){
   const maxEng = Math.max(1, ...R.personas.map(p=>p.engagers));
   const personaRows = R.personas.map(p=>{
     const w=Math.max(2, p.engagers/maxEng*100);
-    return `<div class="demo-row"><div class="demo-row-top"><span class="demo-row-label">${esc(p.name)}</span><span class="demo-row-pct">${fmtFull(p.engagers)} engagers · ${esc(p.pct)} of ICP · ${Number(p.avg).toFixed(1)} avg engagements</span></div><div class="demo-bar"><div class="demo-bar-fill" style="width:${w}%"></div></div></div>`;
+    return `<div class="demo-row"><div class="demo-row-top"><span class="demo-row-label">${esc(p.name)}</span><span class="demo-row-pct">${fmtFull(p.engagers)} engagers · ${esc(p.pct)} of ICP</span></div><div class="demo-bar"><div class="demo-bar-fill" style="width:${w}%"></div></div></div>`;
   }).join('');
 
-  const engagers = (R.topEngagers||[]).filter(e=>!/netlify/i.test(e.company||''));
-  const engRows = engagers.map(e=>`<tr><td>${esc(e.name)}</td><td class="role-cell">${esc(e.company)}</td><td><span class="pill ${personaClass(e.persona)}">${esc(e.persona)}</span></td><td class="num">${fmtFull(e.eng)}</td><td class="num">${fmtFull(e.posts)}</td></tr>`).join('')
-    || `<tr><td colspan="5"><div class="empty">No ICP engagers.</div></td></tr>`;
+  const engagers = (R.topEngagers||[]).filter(e=>!/netlify/i.test(e.company||'') && !/netlify/i.test(e.role||''));
+  const engRows = engagers.map(e=>`<tr><td>${esc(e.name)}</td><td class="role-cell">${esc(e.role)}</td><td>${esc(e.company)}</td><td><span class="pill ${personaClass(e.persona)}">${esc(e.persona)}</span></td><td class="num">${fmtFull(e.eng)}</td><td class="num">${fmtFull(e.posts)}</td></tr>`).join('')
+    || `<tr><td colspan="6"><div class="empty">No ICP engagers.</div></td></tr>`;
+
+  let breakdown = '';
+  if (R.topics){
+    breakdown = `
+      <div class="section-sub">Topic Performance</div>
+      <div class="table-card"><div class="table-wrap"><table>
+        <thead><tr><th>Topic</th><th class="num">Posts</th><th class="num">Total eng.</th><th class="num">ICP eng.</th><th class="num">ICP rate</th></tr></thead>
+        <tbody>${R.topics.map(t=>`<tr><td>${esc(t.name)}</td><td class="num">${fmtFull(t.posts)}</td><td class="num">${fmtFull(t.totalEng)}</td><td class="num">${fmtFull(t.icpEng)}</td><td class="num">${esc(t.icpRate)}</td></tr>`).join('')}</tbody>
+      </table></div></div>`;
+  } else if (R.postAnalysis){
+    breakdown = `
+      <div class="section-sub">Post-by-Post Analysis</div>
+      <div class="table-card"><div class="table-wrap"><table>
+        <thead><tr><th>Date</th><th>Topic</th><th class="num">Total eng.</th><th class="num">ICP eng.</th><th class="num">ICP rate</th></tr></thead>
+        <tbody>${R.postAnalysis.map(t=>`<tr><td class="post-date">${fmtDate(t.date)}</td><td>${esc(t.topic)}</td><td class="num">${fmtFull(t.totalEng)}</td><td class="num">${fmtFull(t.icpEng)}</td><td class="num">${esc(t.icpRate)}</td></tr>`).join('')}</tbody>
+      </table></div></div>`;
+  }
 
   const insightItems = (R.contentInsights||[]).map((t,i)=>`<li><span class="num">${i+1}</span>${esc(t)}</li>`).join('');
 
   host.innerHTML = `
     <div class="section-divider">
-      <h2>ICP Engagement Report <span class="muted" style="font-weight:400;font-size:12px">· ${periodLabel}</span></h2>
-      <span class="meta">${esc(R.subject)} · ${fmtDate(R.periodStart)} – ${fmtDate(R.periodEnd)} · prepared ${fmtDate(R.prepared)}</span>
+      <h2>ICP Engagement Report</h2>
+      <span class="meta">${esc(R.subject)} · ${R.posts} posts · ${fmtDate(R.periodStart)} – ${fmtDate(R.periodEnd)} · prepared ${fmtDate(R.prepared)}</span>
     </div>
     <div class="section-sub">Summary</div>
     <p class="summary-text">${esc(R.summary.text)}</p>
     <div class="metric-grid">${sumCards}</div>
     <div class="section-sub">Persona Breakdown</div>
     <div class="demo-card">${personaRows}</div>
-    <div class="section-sub">Top ICP Engagers <span class="muted" style="font-weight:400;text-transform:none;letter-spacing:0">· ${engagers.length} shown, sorted by total engagements · Netlify accounts excluded</span></div>
+    <div class="section-sub">Top ICP Engagers <span class="muted" style="font-weight:400;text-transform:none;letter-spacing:0">· ${engagers.length} shown, sorted by engagements · Netlify accounts excluded · full list on the ICPs tab</span></div>
     <div class="table-card"><div class="table-wrap"><table>
-      <thead><tr><th>Name</th><th>Company</th><th>Persona</th><th class="num">Eng</th><th class="num">Posts</th></tr></thead>
+      <thead><tr><th>Name</th><th>Role</th><th>Company</th><th>Persona</th><th class="num">Eng</th><th class="num">Posts</th></tr></thead>
       <tbody>${engRows}</tbody>
     </table></div></div>
+    ${breakdown}
     <div class="section-sub">Content Insights</div>
     <ul class="insights">${insightItems}</ul>`;
 }
 
-// ── TAB 2: BY POST ────────────────────────────────────────────────
-function humanize(slug){
-  let s = slug.replace(/-(share|ugcPost)-\d+-[\w-]+$/,'').replace(/-+/g,' ').trim();
-  try { s = decodeURIComponent(s); } catch(_){}
-  return s.charAt(0).toUpperCase()+s.slice(1) + '…';
-}
+// ── BY POST (one per person) ──────────────────────────────────────
 const POST_COLS = [
-  { key:'date',  label:'Date', num:false, get:p=>p[1], render:p=>`<span class="post-date">${fmtDate(p[1])}</span>` },
-  { key:'title', label:'Post', num:false, get:p=>p[0], render:p=>`<a class="post-title" href="${LI.urlPrefix+p[0]}" target="_blank" rel="noopener">${esc(humanize(p[0]))}</a>` },
-  { key:'impr',  label:'Impressions', num:true, get:p=>p[2]||0, render:p=>fmtFull(p[2]) },
-  { key:'eng',   label:'Engagements', num:true, get:p=>p[3]||0, render:p=>fmtFull(p[3]) },
-  { key:'rate',  label:'Eng. Rate', num:true, get:p=>(p[2]&&p[3])?p[3]/p[2]*100:0, render:p=>(p[2]&&p[3]!=null)?fmtPct(p[3]/p[2]*100):'—' }
+  { key:'date',  label:'Date',        num:false, get:p=>p[1] },
+  { key:'title', label:'Post',        num:false, get:p=>p[0] },
+  { key:'impr',  label:'Impressions', num:true,  get:p=>p[2]||0 },
+  { key:'eng',   label:'Engagements', num:true,  get:p=>p[3]||0 },
+  { key:'rate',  label:'Eng. Rate',   num:true,  get:p=>(p[2]&&p[3])?p[3]/p[2]*100:0 }
 ];
-let postSort = { col:'impr', dir:'desc' };
-const POST_MIN_DATE = '2026-03-01';  // hide any posts published before this date
-function renderPosts(){
-  document.getElementById('posts-head').innerHTML = POST_COLS.map(c=>{
-    const active=postSort.col===c.key; const ind=!active?'⇅':postSort.dir==='asc'?'▲':'▼';
-    return `<th class="sortable ${c.num?'num':''}" onclick="sortPosts('${c.key}')">${c.label}<span class="sort-ind">${ind}</span></th>`;
-  }).join('');
-  const cutoff = Date.parse(POST_MIN_DATE+'T00:00:00Z');
-  const posts = ((LI&&LI.posts)?LI.posts:[]).filter(p=>{ const t=Date.parse(p[1]); return isNaN(t) || t>=cutoff; });
-  if (!posts.length){ document.getElementById('posts-body').innerHTML = `<tr><td colspan="${POST_COLS.length}"><div class="empty">No posts yet.</div></td></tr>`; return; }
-  const col = POST_COLS.find(c=>c.key===postSort.col);
-  const sorted = [...posts].sort((a,b)=>{
-    let av=col.get(a), bv=col.get(b);
-    if (postSort.col==='date'){ av=Date.parse(av)||0; bv=Date.parse(bv)||0; }
-    if (typeof av==='string'){ return postSort.dir==='asc'?av.localeCompare(bv):bv.localeCompare(av); }
-    return postSort.dir==='asc'?av-bv:bv-av;
-  });
-  document.getElementById('posts-body').innerHTML = sorted.map(p=>'<tr>'+POST_COLS.map(c=>`<td class="${c.num?'num':''}">${c.render(p)}</td>`).join('')+'</tr>').join('');
+function sortPosts(personKey, col){
+  const s = view[personKey].sort;
+  if (s.col===col) s.dir = s.dir==='asc'?'desc':'asc'; else { s.col=col; s.dir = col==='title'?'asc':'desc'; }
+  renderPosts(personKey);
 }
-function sortPosts(col){ if(postSort.col===col)postSort.dir=postSort.dir==='asc'?'desc':'asc'; else postSort={col,dir:col==='title'?'asc':'desc'}; renderPosts(); }
+function renderPosts(personKey){
+  const person = PEOPLE[personKey], v = view[personKey], rep = report(personKey);
+  const host = document.getElementById('tab-'+personKey+'-posts');
+  const inPeriod = postsInPeriod(rep), carried = (rep.posts||[]).length - inPeriod.length;
 
-// ── TAB 3: ICPs ───────────────────────────────────────────────────
+  const periodSeg = person.reports.length > 1
+    ? `<div class="seg">${person.reports.map(r=>`<button class="${r.key===v.reportKey?'active':''}" onclick="setPostsReport('${personKey}','${r.key}')">${esc(r.label)}</button>`).join('')}</div>` : '';
+
+  const head = POST_COLS.map(c=>{
+    const active=v.sort.col===c.key; const ind=!active?'⇅':v.sort.dir==='asc'?'▲':'▼';
+    return `<th class="sortable ${c.num?'num':''}" onclick="sortPosts('${personKey}','${c.key}')">${c.label}<span class="sort-ind">${ind}</span></th>`;
+  }).join('');
+
+  const col = POST_COLS.find(c=>c.key===v.sort.col);
+  const sorted = [...(rep.posts||[])].sort((a,b)=>{
+    let av=col.get(a), bv=col.get(b);
+    if (v.sort.col==='date'){ av=Date.parse(av)||0; bv=Date.parse(bv)||0; }
+    if (typeof av==='string') return v.sort.dir==='asc'?av.localeCompare(bv):bv.localeCompare(av);
+    return v.sort.dir==='asc'?av-bv:bv-av;
+  });
+  const body = sorted.map(p=>{
+    const outside = !(p[1] >= rep.start && p[1] <= rep.end);
+    return `<tr>
+      <td><span class="post-date">${fmtDate(p[1])}</span>${outside?' <span class="muted" style="font-size:11px">· earlier post</span>':''}</td>
+      <td><a class="post-title" href="${esc(postUrl(rep,p))}" target="_blank" rel="noopener">${esc(postTitle(p))}</a></td>
+      <td class="num">${fmtFull(p[2])}</td>
+      <td class="num">${fmtFull(p[3])}</td>
+      <td class="num">${(p[2]&&p[3]!=null)?fmtPct(p[3]/p[2]*100):'—'}</td>
+    </tr>`;
+  }).join('') || `<tr><td colspan="${POST_COLS.length}"><div class="empty">No posts in this period.</div></td></tr>`;
+
+  host.innerHTML = `
+    <div class="person-bar">
+      <span class="person-name">${esc(person.name)}</span>
+      <span class="person-role">Top-performing LinkedIn posts · ${esc(rep.label)}</span>
+    </div>
+    <div class="toolbar">
+      ${periodSeg}
+      <div class="range-label">${inPeriod.length} published in the period${carried?` · ${carried} earlier ${carried===1?'post':'posts'} that still drew impressions`:''}</div>
+    </div>
+    <div class="table-card"><div class="table-wrap">
+      <table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>
+    </div></div>
+    <p class="lb-foot">LinkedIn caps each export at the top 50 posts by engagements and the top 50 by impressions; a post that made only one of those lists shows “—” for the other metric.</p>`;
+}
+function setPostsReport(personKey, key){ view[personKey].reportKey = key; renderPosts(personKey); }
+
+// ── LEADERBOARD (head-to-head T-chart) ────────────────────────────
+// Compares the two people over the most recent period they BOTH have a
+// report for, so every row is like-for-like out of the same LinkedIn export.
+function commonReport(){
+  const a = PEOPLE.mathias.reports, b = PEOPLE.rtl.reports;
+  for (const ra of a){ const rb = b.find(r=>r.key===ra.key); if (rb) return [ra, rb]; }
+  return null;
+}
+function renderLeaderboard(){
+  const host = document.getElementById('tab-leaderboard');
+  const pair = commonReport();
+  if (!pair){ host.innerHTML = `<div class="empty">No period is covered by a report for both people yet.</div>`; return; }
+  const [A, B] = pair;              // A = Mathias, B = Richard
+  const pa = PEOPLE.mathias, pb = PEOPLE.rtl;
+
+  const brk = r => { const o={}; ((r.breakdown&&r.breakdown.social&&r.breakdown.social.items)||[]).forEach(i=>o[i.label]=i.value); return o; };
+  const ba = brk(A), bb = brk(B);
+  const nA = postsInPeriod(A).length, nB = postsInPeriod(B).length;
+  const fA = sum(A.fNew), fB = sum(B.fNew);
+  const iA = A.totals.impressions, iB = B.totals.impressions;
+  const eA = A.breakdown.social.total, eB = B.breakdown.social.total;
+  const topA = Math.max(0, ...(A.posts||[]).filter(p=>p[1]>=A.start&&p[1]<=A.end).map(p=>p[2]||0));
+  const topB = Math.max(0, ...(B.posts||[]).filter(p=>p[1]>=B.start&&p[1]<=B.end).map(p=>p[2]||0));
+  const grow = (r,f) => (r.totFollowers-f) > 0 ? f/(r.totFollowers-f)*100 : null;
+
+  // higher: 1 = bigger number wins, 0 = no winner marked
+  const ROWS = [
+    { group:'Growth' },
+    { label:'New followers',        note:'gained over the period',        a:fA, b:fB, f:fmtFull },
+    { label:'Growth rate',          note:'new followers ÷ starting base', a:grow(A,fA), b:grow(B,fB), f:v=>v==null?'—':v.toFixed(1)+'%' },
+    { label:'Posts published',      note:'in the period',                 a:nA, b:nB, f:fmtFull },
+    { group:'Engagement' },
+    { label:'Reactions',            a:ba['Reactions'],        b:bb['Reactions'],        f:fmtFull },
+    { label:'Comments',             a:ba['Comments'],         b:bb['Comments'],         f:fmtFull },
+    { label:'Reposts',              a:ba['Reposts'],          b:bb['Reposts'],          f:fmtFull },
+    { label:'Saves',                note:'we love the saves', a:ba['Saves'], b:bb['Saves'], f:fmtFull },
+    { label:'Sends on LinkedIn',    note:'shared privately, person to person', a:ba['Sends on LinkedIn'], b:bb['Sends on LinkedIn'], f:fmtFull },
+    { label:'Total engagements',    note:'all social engagements',        a:eA, b:eB, f:fmtFull },
+    { label:'Engagements per post', a:nA?eA/nA:null, b:nB?eB/nB:null, f:v=>v==null?'—':v.toFixed(1) },
+    { group:'Reach' },
+    { label:'Impressions',          a:iA, b:iB, f:fmtFull },
+    { label:'Members reached',      note:'unique members',                a:A.discovery.members, b:B.discovery.members, f:fmtFull },
+    { label:'Impressions per post', a:nA?iA/nA:null, b:nB?iB/nB:null, f:v=>v==null?'—':fmtFull(Math.round(v)) },
+    { label:'Engagement rate',      note:'engagements ÷ impressions',     a:iA?eA/iA*100:null, b:iB?eB/iB*100:null, f:v=>v==null?'—':v.toFixed(2)+'%' },
+    { label:'Biggest single post',  note:'impressions on one post',       a:topA, b:topB, f:fmtFull }
+  ];
+
+  const body = ROWS.map(r=>{
+    if (r.group) return `<tr class="lb-group"><td colspan="3">${esc(r.group)}</td></tr>`;
+    const aw = (r.a!=null && r.b!=null && r.a > r.b), bw = (r.a!=null && r.b!=null && r.b > r.a);
+    return `<tr>
+      <td class="lb-metric">${esc(r.label)}${r.note?`<small>${esc(r.note)}</small>`:''}</td>
+      <td class="lb-val ${aw?'win':''}">${r.f(r.a)}</td>
+      <td class="lb-val ${bw?'win':''}">${r.f(r.b)}</td>
+    </tr>`;
+  }).join('');
+
+  const card = (p, rep, gained, cls) => `
+    <th class="lb-val" style="text-align:left">
+      <div class="lb-person">
+        <span class="lb-person-name">${esc(p.name)}</span>
+        <span class="lb-person-role">${esc(p.role)}</span>
+        <span class="lb-person-foll">${fmtFull(rep.totFollowers)} <small>followers</small> <span class="lb-chip">▲ ${fmtFull(gained)}</span></span>
+      </div>
+    </th>`;
+
+  const ratio = (x,y) => y ? (x/y).toFixed(1)+'×' : '—';
+  host.innerHTML = `
+    <div class="lb-eyebrow">Netlify × Virio · Head to head</div>
+    <div class="lb-title">${esc(pa.short)} <span class="vs">vs</span> ${esc(pb.short)} <span class="vs">· ${esc(A.label)}</span></div>
+    <div class="lb-sub">Both columns come from each person's own LinkedIn analytics export for ${fmtDate(A.start)} – ${fmtDate(A.end)}, so every row is like-for-like.</div>
+
+    <div class="lb-lede">
+      <div class="lb-lede-card">
+        <div class="lb-lede-who">${esc(pa.short)} leads on volume and reach</div>
+        <div class="lb-lede-text">${fmtFull(iA)} impressions (${ratio(iA,iB)} Richard's) and ${fmtFull(eA)} engagements across ${nA} posts, plus ${fmtFull(fA)} new followers — ${ratio(fA,fB)} Richard's follower growth on roughly half the base.</div>
+      </div>
+      <div class="lb-lede-card b">
+        <div class="lb-lede-who">${esc(pb.short)} leads on audience size and the month's biggest post</div>
+        <div class="lb-lede-text">${fmtFull(B.totFollowers)} followers — ${ratio(B.totFollowers,A.totFollowers)} Mathias's — and the single biggest post of the month at ${fmtFull(topB)} impressions, from ${nB} posts in his first full month of publishing.</div>
+      </div>
+    </div>
+
+    <div class="lb-card"><table class="lb">
+      <thead><tr class="lb-people">
+        <th class="metric-col"></th>
+        ${card(pa, A, fA)}
+        ${card(pb, B, fB)}
+      </tr></thead>
+      <tbody>${body}</tbody>
+    </table></div>
+    <p class="lb-foot">Highlighted cell = category leader · data ${fmtDate(A.start)} – ${fmtDate(A.end)} · source: LinkedIn analytics exports for each profile.</p>`;
+}
+
+// ── ICPs TAB ──────────────────────────────────────────────────────
+// Two sources: the per-person ICP engager lists committed under /data
+// (loaded on first visit), and any CSV uploaded here, which is stored in
+// Supabase so it is shared with everyone who opens the dashboard.
 function parseCSV(text){
   const rows=[]; let row=[], cur='', q=false;
   for (let i=0;i<text.length;i++){ const ch=text[i];
@@ -686,43 +1126,84 @@ function parseCSV(text){
   if (cur.length||row.length){ row.push(cur); rows.push(row); }
   return rows.filter(r=>r.some(c=>c.trim()!==''));
 }
+function gridToList(grid){
+  const headers = grid[0].map(h=>h.trim());
+  const rows = grid.slice(1).map(r=>{ const o={}; headers.forEach((h,i)=>o[h]=(r[i]||'').trim()); return o; });
+  return { columns:headers, rows };
+}
+let BUILTIN_ICPS = null;   // [{id, name, meta, columns, rows, href}]
+let UPLOADED_ICPS = [];
+let ICP_DATA = {};         // id -> list, for CSV download
+
+async function loadBuiltinIcps(){
+  if (BUILTIN_ICPS) return BUILTIN_ICPS;
+  BUILTIN_ICPS = [];
+  for (const key of PERSON_KEYS){
+    const p = PEOPLE[key], f = p.icpFile; if (!f) continue;
+    try {
+      const res = await fetch(f.path, { cache:'no-cache' });
+      if (!res.ok) throw new Error('HTTP '+res.status);
+      const grid = parseCSV(await res.text());
+      if (grid.length < 2) continue;
+      const { columns, rows } = gridToList(grid);
+      BUILTIN_ICPS.push({ id:'builtin-'+key, name:f.label, meta:f.period+' · from the ICP engagement report', columns, rows, href:f.path });
+    } catch(e){ /* a missing file just means that list isn't shown */ }
+  }
+  return BUILTIN_ICPS;
+}
+async function loadIcps(){
+  const wrap=document.getElementById('icp-lists'); wrap.innerHTML='<div class="empty">Loading…</div>';
+  await loadBuiltinIcps();
+  const { data, error }=await sb.from(ICP_TABLE).select('*').order('created_at',{ascending:false});
+  if (error){ UPLOADED_ICPS=[]; }
+  else UPLOADED_ICPS = (data||[]).map(l=>({ id:l.id, name:l.name, meta:`${(l.rows||[]).length} ${(l.rows||[]).length===1?'entry':'entries'} · added ${fmtDate((l.created_at||'').slice(0,10))}${l.created_by?' · '+l.created_by:''}`, columns:l.columns||((l.rows&&l.rows[0])?Object.keys(l.rows[0]):[]), rows:l.rows||[], uploaded:true }));
+  ICP_DATA={}; [...BUILTIN_ICPS, ...UPLOADED_ICPS].forEach(l=>{ ICP_DATA[l.id]=l; });
+  renderIcpLists(error);
+}
+function renderIcpLists(error){
+  const wrap=document.getElementById('icp-lists');
+  const q=(document.getElementById('icp-filter').value||'').trim().toLowerCase();
+  const match=(l,r)=> !q || l.columns.some(c=>String(r[c]||'').toLowerCase().includes(q));
+  const lists=[...(BUILTIN_ICPS||[]), ...UPLOADED_ICPS];
+  if(!lists.length){ wrap.innerHTML=`<div class="empty">No ICP lists yet. Click <strong>+ Upload ICP CSV</strong> to add one.</div>`; return; }
+  wrap.innerHTML = (error?`<div class="hint">Couldn't load uploaded ICP lists: ${esc(error.message)}. The built-in lists below still work.</div>`:'')
+    + lists.map(l=>{
+    const rows=l.rows.filter(r=>match(l,r));
+    const head=l.columns.map(c=>`<th>${esc(c.replace(/_/g,' '))}</th>`).join('');
+    const body=rows.slice(0,500).map(r=>'<tr>'+l.columns.map(c=>`<td>${esc(r[c])}</td>`).join('')+'</tr>').join('')
+      || `<tr><td colspan="${l.columns.length}"><div class="empty">Nothing matches “${esc(q)}”.</div></td></tr>`;
+    const more = rows.length>500 ? `<div class="empty">Showing the first 500 of ${fmtFull(rows.length)} matching rows — download the CSV for the rest.</div>` : '';
+    const count = q ? `${fmtFull(rows.length)} of ${fmtFull(l.rows.length)} matching` : `${fmtFull(l.rows.length)} ${l.rows.length===1?'entry':'entries'}`;
+    const del = l.uploaded ? `<button class="btn danger" onclick="deleteIcp('${l.id}')">Delete</button>` : '';
+    return `<div class="icp-list-card">
+      <div class="icp-list-head">
+        <div><div class="icp-list-name">${esc(l.name)}</div><div class="icp-list-meta">${count}${l.uploaded?' · '+esc(l.meta):' · '+esc(l.meta)}</div></div>
+        <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+          <button class="btn" style="padding:5px 12px;font-size:12px" onclick="downloadIcpCsv('${l.id}')">↓ Download CSV</button>${del}
+        </div>
+      </div>
+      <div class="table-wrap icp-scroll"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>${more}
+    </div>`;
+  }).join('');
+}
 async function handleIcpUpload(e){
   const file=e.target.files[0]; e.target.value=''; if(!file)return;
   const statusEl=document.getElementById('icp-status'); statusEl.textContent='Reading '+file.name+'…';
   try {
     const grid=parseCSV(await file.text());
     if (grid.length<2){ statusEl.textContent='That CSV looks empty.'; return; }
-    const headers=grid[0].map(h=>h.trim());
-    const rows=grid.slice(1).map(r=>{ const o={}; headers.forEach((h,i)=>o[h]=(r[i]||'').trim()); return o; });
+    const { columns, rows } = gridToList(grid);
     const name=(file.name.replace(/\.csv$/i,'')||'ICP list').trim();
     const { data:{ user } }=await sb.auth.getUser();
-    const { error }=await sb.from(ICP_TABLE).insert({ name, columns:headers, rows, created_by:user?.email||null });
+    const { error }=await sb.from(ICP_TABLE).insert({ name, columns, rows, created_by:user?.email||null });
     if (error) throw error;
     statusEl.textContent='Uploaded "'+name+'" ('+rows.length+' rows).'; loadIcps();
   } catch(err){ statusEl.textContent='Upload failed: '+err.message; }
 }
-let ICP_DATA = {};  // id -> loaded list, for CSV export
-async function loadIcps(){
-  const wrap=document.getElementById('icp-lists'); wrap.innerHTML='<div class="empty">Loading…</div>';
-  const { data, error }=await sb.from(ICP_TABLE).select('*').order('created_at',{ascending:false});
-  if (error){ wrap.innerHTML=`<div class="hint">Couldn't load ICP lists: ${esc(error.message)}</div>`; return; }
-  if (!data||!data.length){ wrap.innerHTML=`<div class="empty">No ICP lists yet. Click <strong>+ Upload ICP CSV</strong> to add one.</div>`; return; }
-  ICP_DATA={}; data.forEach(l=>{ ICP_DATA[l.id]=l; });
-  wrap.innerHTML=data.map(renderIcpList).join('');
-}
-function renderIcpList(list){
-  const cols=list.columns||(list.rows&&list.rows[0]?Object.keys(list.rows[0]):[]);
-  const rows=list.rows||[];
-  const head=cols.map(c=>`<th>${esc(c)}</th>`).join('');
-  const body=rows.map(r=>'<tr>'+cols.map(c=>`<td>${esc(r[c])}</td>`).join('')+'</tr>').join('');
-  return `<div class="icp-list-card"><div class="icp-list-head"><div><div class="icp-list-name">${esc(list.name)}</div><div class="icp-list-meta">${rows.length} ${rows.length===1?'entry':'entries'} · added ${fmtDate((list.created_at||'').slice(0,10))}${list.created_by?' · '+esc(list.created_by):''}</div></div><div style="display:flex;gap:8px;align-items:center;flex-shrink:0"><button class="btn" style="padding:5px 12px;font-size:12px" onclick="downloadIcpCsv('${list.id}')">↓ Download CSV</button><button class="btn danger" onclick="deleteIcp('${list.id}')">Delete</button></div></div><div class="table-wrap"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div></div>`;
-}
 function csvCell(v){ v = v==null?'':String(v); return /[",\n\r]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }
 function downloadIcpCsv(id){
   const list=ICP_DATA[id]; if(!list){ alert('Could not find that list to download.'); return; }
-  const cols=list.columns||(list.rows&&list.rows[0]?Object.keys(list.rows[0]):[]);
-  const rows=list.rows||[];
-  const lines=[cols.map(csvCell).join(',')].concat(rows.map(r=>cols.map(c=>csvCell(r[c])).join(',')));
+  const lines=[list.columns.map(csvCell).join(',')].concat(list.rows.map(r=>list.columns.map(c=>csvCell(r[c])).join(',')));
   const blob=new Blob(['﻿'+lines.join('\r\n')], {type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a'); a.href=url; a.download=((list.name||'icp-list').replace(/[^\w.-]+/g,'_'))+'.csv';
@@ -731,7 +1212,21 @@ function downloadIcpCsv(id){
 }
 async function deleteIcp(id){ if(!confirm('Delete this ICP list?'))return; const { error }=await sb.from(ICP_TABLE).delete().eq('id',id); if(error){alert('Delete failed: '+error.message);return;} loadIcps(); }
 
-// ── BOOT ──────────────────────────────────────────────────────────
+// ── LOAD / BOOT ───────────────────────────────────────────────────
+function loadData(){
+  const btn=document.getElementById('refresh-btn'); btn.disabled=true;
+  setStatus('Loading dashboard data…','loading');
+  try {
+    const latest = PEOPLE.mathias.reports[0];
+    setStatus('');
+    document.getElementById('last-updated').textContent = 'Data through ' + fmtDate(latest.end);
+    document.getElementById('footer-date').textContent =
+      'Netlify Content Performance Dashboard · Powered by Virio · LinkedIn data through ' + fmtDate(latest.end);
+    renderTabNav();
+    switchTab(activeTab);
+  } catch(e){ setStatus('Failed to load: '+e.message,'error'); }
+  finally { btn.disabled=false; }
+}
 async function boot(){
   const { data:{ session } }=await sb.auth.getSession();
   if (session && handleValidSession(session)) loadData(); else showAuthScreen(true);
